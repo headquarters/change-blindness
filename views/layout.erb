@@ -1,0 +1,95 @@
+<!doctype html>  
+<html lang="en">
+	<head>
+        <meta charset="utf-8" />
+        
+        <title><%= @@page_title %></title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="viewport" content="width=device-width">
+		
+		<link rel="stylesheet" href="/css/normalize.css">
+		<link rel="stylesheet" href="/css/cb.css">
+		<!--<script src="/js/vendor/modernizr.js"></script>-->
+	</head>
+	<body>
+		<header class="clearfix">
+          <div class="company-info">
+            <img src="/images/logo-brick.png" alt="Brick Mart logo" />
+            <div class="name-and-tagline">
+              <h1><%= ORGANIZATION %></h1>
+              <div class="subtitle">Individual bricks to complete your collection.</div>
+            </div>
+          </div>
+          <div class="nav-and-promo">
+            <div class="promo">Free shipping on all orders!</div>
+            <nav>
+              <ul>
+                  <li><a href="#nogo">Sign Up</a></li>
+                  <li><a href="#nogo">Account</a></li>
+                  <li><a href="#nogo">Cart</a></li>
+                  <li><a href="#nogo">Wish List</a></li>
+              </ul>
+            </nav>
+          </div>
+		</header>
+        <div id="notification-area">&nbsp;</div>
+        <div id="search-and-breadcrumbs" class="clearfix">
+          <div id="search">
+            <input type="text"> <button class="button">Search</button>
+          </div>
+        </div>
+        <% if request.path == "/" %>
+        <div id="home-nav">
+            <ul>
+                <li><a href="#nogo">Category</a></li>
+                <li><a href="#nogo">Type</a></li>
+                <li><a href="#nogo">Manufacturer</a></li>
+                <li><a href="#nogo">Sales and Deals</a></li>
+            </ul>
+        </div>
+        <% end %>
+        <div id="content" class="clearfix">
+          <!--<div id="product-nav">
+            <ul>
+              <li>
+                <a href="#nogo">Category</a>
+                <ul>
+                  <li><a href="#nogo">Bricks</a></li>
+                  <li><a href="#nogo">Platforms</a></li>
+                  <li><a href="#nogo">Figures</a></li>
+                  <li><a href="#nogo">Vehicle Accessories</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#nogo">Type</a>
+                <ul>
+                  <li><a href="#nogo">Individual Pieces</a></li>
+                  <li><a href="#nogo">Sets</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#nogo">Manufacturer</a>
+                <ul>
+                  <li><a href="#nogo">Lego&reg;</a></li>
+                  <li><a href="#nogo">MegaBlok&reg;</a></li>
+                  <li><a href="#nogo">Lincoln Log&reg;</a></li>
+                </ul>
+              </li>
+  
+              <li><a href="#nogo">Sales and Deals</a></li>
+            </ul>
+          </div>-->
+          <section>
+              <%= yield %>
+          </section>
+        </div>
+		<footer>
+          <a href="#nogo">About</a> | <a href="#nogo">Returns and Refunds</a> | <a href="#nogo">Help</a> | <a href="#nogo">Contact Us</a> | <a href="#nogo">Careers</a>
+          <div id="copyright">&copy; <%= ORGANIZATION %></div>
+		  
+		</footer>
+		<!--<script src="/js/vendor/jquery.js"></script>-->
+		<script src="/js/cb.js"></script>		
+	</body>
+</html>
