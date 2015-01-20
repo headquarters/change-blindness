@@ -8,6 +8,6 @@ require './models'
 
 DataMapper.auto_migrate!
 
-#health_history_category = Category.create(:category_name => "Health History", :category_identifier => "health-history")
+#Trial.create(:page_name => "Home Page", :changed_area => "Upper Left")
 
-DataMapper.finalize!
+#DataMapper.finalize!

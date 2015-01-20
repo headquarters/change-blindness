@@ -6,8 +6,23 @@ class Session
   property :progress, Float, :default => 0.0
   property :current_question, Integer
   property :created_at, DateTime
+  property :has_given_consent, Boolean, :default => false
+  property :mechanical_turk_code, String, :length => 128
   
-  #has n, :answer
+  has n, :trial
+end
+
+class Trial 
+  include DataMapper::Resource
+  
+  property :id, Serial
+  property :created_at, DateTime
+  
+  property :page_name, String, :length => 32
+  property :changed_area, String, :length => 128
+  property :selected_area, String, :length => 128, :default => ""
+  
+  belongs_to :session
 end
 =begin
 class InputType

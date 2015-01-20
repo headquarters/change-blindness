@@ -24,40 +24,65 @@ ORGANIZATION = "Brick Mart"
 # Full <title> passed to a view by being global
 @@page_title = "Page Title"
 
-# Height and weight count as 1 question (BMI).
-#TOTAL_QUESTIONS = 17
+TOTAL_TRIALS = 30
 
 # Use round() when displaying.
-#INCREMENT = 100.0/TOTAL_QUESTIONS
+INCREMENT = 100.0/TOTAL_TRIALS
 
 
 before do
   # Get the first session with this session_id or just create it and return that session row
-  #@session = Session.first_or_create(:session_id => session.id)
+  @session = Session.first_or_create(:session_id => session.id)
+  
+  # If no consent given, return to home page
+  #@session
 end
 
-# Home page
+## Study pages
 get '/' do
+  @@page_title = "Change Blindness Study"
+  @active = "home"
+  erb :home, :layout => :home_layout
+end
+
+post '/consent' do
+  redirect '/practice'
+end
+
+get '/practice' do
   @@page_title = "Home | " + ORGANIZATION
   @active = "home"
   erb :home  
+end
+
+get '/results' do
+  # if not at 100% complete, redirect to another trial
+  
+  # generate a mechanical turk code
+  
+end
+
+## Trial pages
+# Home page
+get '/home' do
+  @@page_title = "Home | " + ORGANIZATION
+  @active = "home"
+  erb :home_page
 end
 
 # Category page
 get '/category' do
   @@page_title = "Categories | " + ORGANIZATION
   @active = "categories"
-  erb :category  
+  erb :category_page 
 end
 
 # Product page
 get '/product' do
   @@page_title = "Lego Brick 39479 | " + ORGANIZATION
   @active = "product"
-  erb :product
+  erb :product_page
 end
-
-
 
 helpers do
   def prevent_widows(text)

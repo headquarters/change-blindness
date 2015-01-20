@@ -1,0 +1,12 @@
+#content {
+    width:960px;
+    margin:0 auto;
+}
+
+.instructions {
+    font-weight:bold;
+}
+
+.consent-form {
+    padding-left:2em;
+}

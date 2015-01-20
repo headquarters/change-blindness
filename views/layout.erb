@@ -35,51 +35,35 @@
 		</header>
         <div id="notification-area">&nbsp;</div>
         <div id="search-and-breadcrumbs" class="clearfix">
-          <div id="search">
-            <input type="text"> <button class="button">Search</button>
-          </div>
-        </div>
-        <% if request.path == "/" %>
-        <div id="home-nav">
-            <ul>
+          <% if request.path == "/category" %>
+            <ul id="breadcrumbs">
+              <li><a href="#nogo">Home</a></li>
+              <li><a href="#nogo">Category</a></li>
+              <li>Bricks</li>
+            </ul>
+          <% end %>
+          <% if request.path == "/product" %>
+            <ul id="breadcrumbs">
+              <li><a href="#nogo">Home</a></li>
+              <li><a href="#nogo">Category</a></li>
+              <li><a href="#nogo">Bricks</a></li>
+              <li>2x4 Short</li>
+            </ul>
+          <% end %>
+          <% if request.path == "/" %>
+            <ul id="home-nav">
                 <li><a href="#nogo">Category</a></li>
                 <li><a href="#nogo">Type</a></li>
                 <li><a href="#nogo">Manufacturer</a></li>
                 <li><a href="#nogo">Sales and Deals</a></li>
             </ul>
+          <% end %>            
+          <div id="search">
+            <input type="text"> <button class="button secondary">Search</button>
+          </div>
         </div>
-        <% end %>
+      
         <div id="content" class="clearfix">
-          <!--<div id="product-nav">
-            <ul>
-              <li>
-                <a href="#nogo">Category</a>
-                <ul>
-                  <li><a href="#nogo">Bricks</a></li>
-                  <li><a href="#nogo">Platforms</a></li>
-                  <li><a href="#nogo">Figures</a></li>
-                  <li><a href="#nogo">Vehicle Accessories</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#nogo">Type</a>
-                <ul>
-                  <li><a href="#nogo">Individual Pieces</a></li>
-                  <li><a href="#nogo">Sets</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#nogo">Manufacturer</a>
-                <ul>
-                  <li><a href="#nogo">Lego&reg;</a></li>
-                  <li><a href="#nogo">MegaBlok&reg;</a></li>
-                  <li><a href="#nogo">Lincoln Log&reg;</a></li>
-                </ul>
-              </li>
-  
-              <li><a href="#nogo">Sales and Deals</a></li>
-            </ul>
-          </div>-->
           <section>
               <%= yield %>
           </section>
