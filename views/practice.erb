@@ -1,0 +1,65 @@
+<div id="step1" class="step">
+    <h2>Practice</h2>
+    <p>
+        Before beginning the actual change blindness test, we'll practice selecting an area that changes in a sample page. <br />
+        <a href="#step2" class="button">Next</a>
+    </p>
+</div>
+<div id="step2" class="step">
+    <h2>Instructions</h2>
+    <p>
+    
+        <ol>
+            <li>You will be shown a sample web page. One of the elements on it will change after 3 seconds.</li>
+            <li>You will have 5 seconds to select the element that changed.</li>
+            <li>Select the element that changed by clicking on it.</li>
+        </ol>
+        <a href="#step3" class="button">Next</a>
+    </p>
+</div>
+<div id="step3" class="step">
+    <div id="sample-page">
+        <div class="header clearfix">
+            <div class="logo">
+                <h3><img src="/images/car.png" alt="" data-change-item="logo" /> Auto Renter</h3>
+                <h4>The most affordable automobile rental guaranteed.</h4> 
+            </div>
+            <div class="nav">
+                <a href="#nogo">Sign Up</a>
+                <a href="#nogo">Log In</a>
+                <a href="#nogo">Pricing</a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="hero">
+                <img src="/images/vehicle-hero.png" alt="Picture of sedan, van, and sports car" data-change-item="image" />
+                <p>Choose from thousands of vehicles in dozens of styles&mdash;cars, trucks, vans, and&nbsp;more!</p>
+                <a href="#nogo">See Rental Options</a>
+            </div>
+            <div class="categories clearfix">
+                <div class="truck category">
+                    <img src="/images/truck.png" alt="Truck silhouette" />
+                    <a href="#nogo">Rent a Truck</a>
+                </div>
+                <div class="sedan category">
+                    <img src="/images/sedan.png" alt="Sedan silhouette" />
+                    <a href="#nogo">Rent a Sedan</a>
+                </div>
+                <div class="coupe category">
+                    <img src="/images/coupe.png" alt="Coupe silhouette" />
+                    <a href="#nogo" data-change-item="wording">Rent a Coupe</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <a href="#nogo">About</a> | <a href="#nogo">Contact Us</a> | <a href="#nogo">Careers</a>
+        </div>
+    </div>
+</div>
+<div id="step4" class="step">
+    <p>
+        <span id="result"></span><br />
+        <a href="#repeat" class="button">Practice Again</a>
+        <a href="/start-test" id="start-test" class="button">Start Test</a>
+    </p>
+</div>
