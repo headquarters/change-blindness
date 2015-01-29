@@ -970,6 +970,7 @@ boomr = {
 				if(impl.disabled_plugins[k]) {
 					continue;
 				}
+	
 				if(!this.plugins[k].is_complete()) {
 					
 					return false;
@@ -1645,7 +1646,7 @@ BOOMR.plugins.BW = {
 		}
 	},
 
-	is_complete: function() { return true; }
+	is_complete: function() { return impl.complete; }
 };
 
 }());
@@ -2715,16 +2716,19 @@ BOOMR.t_end = new Date().getTime();
 /*jslint continue: true, plusplus: true, regexp: true, unparam: true, sloppy: true, white: true, browser: true, devel: true */
 /*properties BOOMR, BOOMR_lstart, BOOMR_start, BOOMR_configt*/
 
-BOOMR.init({
-	beacon_url: "/beacon",
-    user_ip: ip_address,
-	BW: {
-		base_url: "/images/boomerang/"
-	}
-});BOOMR.t_end = new Date().getTime();
+var data = {
+    screen_width: screen.width,
+    screen_height: screen.height,
+    browser_width: window.outerWidth,
+    browser_height: window.outerHeight,
+    pixel_depth: screen.pixelDepth,
+    platform: navigator.platform,
+    language: navigator.language,
+    browser: navigator.vendor,
+    user_agent: navigator.userAgent
+};
 
-/*jslint continue: true, plusplus: true, regexp: true, unparam: true, sloppy: true, white: true, browser: true, devel: true */
-/*properties BOOMR, BOOMR_lstart, BOOMR_start, BOOMR_configt*/
+BOOMR.addVar(data);
 
 BOOMR.init({
 	beacon_url: "/beacon",

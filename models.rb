@@ -1,6 +1,7 @@
 class Session
   include DataMapper::Resource
 
+  # User data
   property :id, Serial  
   property :session_id, String, :length => 256
   property :progress, Float, :default => 0.0
@@ -8,6 +9,18 @@ class Session
   property :created_at, DateTime
   property :has_given_consent, Boolean, :default => false
   property :mechanical_turk_code, String, :length => 128
+  property :ip_address, String, :length => 16
+  
+  # Browser data
+  property :screen_width, Integer
+  property :screen_height, Integer
+  property :browser_width, Integer
+  property :browser_height, Integer
+  property :pixel_depth, Integer
+  property :platform, String, :length => 64
+  property :language, String, :length => 32
+  property :browser, String, :length => 64
+  property :user_agent, String, :length => 192
   
   has n, :trial
 end

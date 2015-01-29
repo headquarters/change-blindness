@@ -29,6 +29,46 @@ TOTAL_TRIALS = 30
 # Use round() when displaying.
 INCREMENT = 100.0/TOTAL_TRIALS
 
+
+# URL structure:
+# /<template_name>/<location_of_change>/<condition_of_change>
+# Template name: whether home, category, or product template is loaded
+# Location of change: DOM element ID that will change
+# Condition of change: 1 of 4 possible conditions (randomly applied at time of request)
+# TODO: this will need to persist for the entire session
+trials = [
+  "/home/location1",
+  "/home/location1",
+  "/home/location2",
+  "/home/location2",
+  "/home/location3",
+  "/home/location3",
+  "/home/location4",
+  "/home/location4",
+  "/home/location5",
+  "/home/location5",
+  "/category/location1",
+  "/category/location1",
+  "/category/location2",
+  "/category/location2",
+  "/category/location3",
+  "/category/location3",
+  "/category/location4",
+  "/category/location4",
+  "/category/location5",
+  "/category/location5",
+  "/product/location1",
+  "/product/location1",
+  "/product/location2",
+  "/product/location2",
+  "/product/location3",
+  "/product/location3",
+  "/product/location4",
+  "/product/location4",
+  "/product/location5",
+  "/product/location5",
+]
+
 before do
   # Get the first session with this session_id or just create it and return that session row
   @session = Session.first_or_create(:session_id => session.id)
@@ -43,7 +83,7 @@ end
 get "/" do
   @@page_title = "Change Blindness Study"
   #print @session.inspect
-  erb :home, :layout => :home_layout
+  erb :home, :layout => :practice_layout
 end
 
 post "/consent" do
@@ -55,11 +95,11 @@ end
 
 get "/practice" do
   @@page_title = "Practice"
-  erb :practice, :layout => :home_layout  
+  erb :practice, :layout => :practice_layout  
 end
 
 get "/start-test" do
-  erb :start_test, :layout => :home_layout
+  erb :start_test, :layout => :practice_layout
 end
 
 # Condition 1: Blank screen for 0.5 second, change element while hidden, then show again
@@ -70,7 +110,7 @@ end
 # Each trial consists of seeing one of the three pages (home, category, or product),
 # where one of the conditional changes happens. 
 get "/trial" do
-  puts "here"
+  trials.size.to_s
 end
 
 get "/results" do
@@ -103,7 +143,16 @@ get "/product" do
 end
 
 get "/beacon" do
-  puts request.params["ba"]
+  # TODO: Use http://ipinfo.io/ to get location from IP later
+  params.to_s
+end
+
+post "/browser-info" do
+  params.each do |key, value|
+    @session[key] = value
+  end
+  
+  @session.save
 end
 
 helpers do

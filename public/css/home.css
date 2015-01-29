@@ -13,6 +13,10 @@
     line-height:1.2;
 }
 
+.loader {
+    vertical-align: middle;
+}
+
 .instructions {
     font-weight:bold;
 }
@@ -30,6 +34,10 @@ input[type="submit"] {
     border-radius:3px;
     background:#333;
     color:#fff;
+}
+
+input[disabled="disabled"] {
+    background: #bbb;    
 }
 
 #step2,

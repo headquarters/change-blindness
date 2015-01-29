@@ -1,0 +1,47 @@
+<!doctype html>  
+<html lang="en">
+	<head>
+        <meta charset="utf-8" />
+        
+        <title>Change Blindness Test</title>
+		<meta name="viewport" content="width=device-width">
+		<% if request.path == "/" %>
+		<script>var ip_address = "<%= request.ip %>";</script>
+		<script src="/js/boomerang/boomerang-0.9.1422480010-debug.js"></script>
+		<% end %>
+		
+		<link rel="stylesheet" href="/css/normalize.css">
+		<link rel="stylesheet" href="/css/home.css">
+		<!--
+			Hi there. Please don't view the source or open the console while taking part in this
+			research experiment.
+		-->
+		<!-- HTML shim needed? -->
+	</head>
+	<body>
+		<noscript>
+			<div id="notice">
+				Sorry, but JavaScript is required to take part in this experiment. 
+			</div>
+		</noscript>
+        <div id="content" class="clearfix">
+			<h1>Change Blindness Test</h1>
+			<section>
+				<%= yield %>
+			</section>
+        </div>
+		<script src="/js/jquery-1.11.2.min.js"></script>
+		<script src="/js/cb.js"></script>
+		<script src="/js/practice.js"></script>
+		<script>
+			BOOMR.subscribe('before_beacon', function(o) {
+				if (typeof o != "undefined") {
+					$("#begin-test")
+						.removeAttr("disabled")
+						.attr("value", "Begin the Test");
+					$(".loader").remove();
+				}
+			});			
+		</script>
+	</body>
+</html>
