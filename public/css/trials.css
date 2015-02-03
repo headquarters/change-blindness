@@ -122,11 +122,17 @@ header nav ul li:last-child {
     content:"";
 }
 
-#search {
+.search {
     float:right;
 }
 
-#search .button {
+.search input {
+    font-size:12px;
+    padding:5px;
+    color:#999;
+}
+
+.search .button {
     padding:0.25em 0.5em;
     font-size:0.9em;
     line-height:1;

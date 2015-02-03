@@ -5,7 +5,7 @@ class Session
   property :id, Serial  
   property :session_id, String, :length => 256
   property :progress, Float, :default => 0.0
-  property :current_question, Integer
+  property :current_trial, Integer, :default => 0
   property :created_at, DateTime
   property :has_given_consent, Boolean, :default => false
   property :mechanical_turk_code, String, :length => 128

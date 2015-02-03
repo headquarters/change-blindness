@@ -19,16 +19,24 @@ require "./models"
 DataMapper.auto_upgrade! 
 DataMapper.finalize
 
-# Part of the <title> that will not change, gets appended to other strings in views
-ORGANIZATION = "Brick Mart"
 # Full <title> passed to a view by being global
-@@page_title = "Page Title"
+@@page_title = ""
 
 TOTAL_TRIALS = 30
 
 # Use round() when displaying.
 INCREMENT = 100.0/TOTAL_TRIALS
 
+conditions = [
+  # Condition 1: Blank screen for 0.5 second, change element while hidden, then show again
+  "blank-screen",  
+  # Condition 2: Normal HTTP request; second page contains changed item
+  "normal-http",
+  # Condition 3: Normal HTTP request with increased latency; second page contains changed item
+  "slow-http",
+  # Condition 4: Change element on the client
+  "no-http"
+]
 
 # URL structure:
 # /<template_name>/<location_of_change>/<condition_of_change>
@@ -37,36 +45,36 @@ INCREMENT = 100.0/TOTAL_TRIALS
 # Condition of change: 1 of 4 possible conditions (randomly applied at time of request)
 # TODO: this will need to persist for the entire session
 trials = [
-  "/home/location1",
-  "/home/location1",
-  "/home/location2",
-  "/home/location2",
-  "/home/location3",
-  "/home/location3",
-  "/home/location4",
-  "/home/location4",
-  "/home/location5",
-  "/home/location5",
-  "/category/location1",
-  "/category/location1",
-  "/category/location2",
-  "/category/location2",
-  "/category/location3",
-  "/category/location3",
-  "/category/location4",
-  "/category/location4",
-  "/category/location5",
-  "/category/location5",
-  "/product/location1",
-  "/product/location1",
-  "/product/location2",
-  "/product/location2",
-  "/product/location3",
-  "/product/location3",
-  "/product/location4",
-  "/product/location4",
-  "/product/location5",
-  "/product/location5",
+  "/home?l=1",
+  "/home?l=1",
+  "/home?l=2",
+  "/home?l=2",
+  "/home?l=3",
+  "/home?l=3",
+  "/home?l=4",
+  "/home?l=4",
+  "/home?l=5",
+  "/home?l=5",
+  "/category?l=1",
+  "/category?l=1",
+  "/category?l=2",
+  "/category?l=2",
+  "/category?l=3",
+  "/category?l=3",
+  "/category?l=4",
+  "/category?l=4",
+  "/category?l=5",
+  "/category?l=5",
+  "/product?l=1",
+  "/product?l=1",
+  "/product?l=2",
+  "/product?l=2",
+  "/product?l=3",
+  "/product?l=3",
+  "/product?l=4",
+  "/product?l=4",
+  "/product?l=5",
+  "/product?l=5",
 ]
 
 before do
@@ -99,6 +107,8 @@ get "/practice" do
 end
 
 get "/start-test" do
+  # Store the full array of trials here, for randomly picking during each /trial request
+  session[:trials] = trials
   erb :start_test, :layout => :practice_layout
 end
 
@@ -110,7 +120,54 @@ end
 # Each trial consists of seeing one of the three pages (home, category, or product),
 # where one of the conditional changes happens. 
 get "/trial" do
-  trials.size.to_s
+  if session[:trials].nil?
+    session[:trials] = trials
+  end
+  
+  trials = session[:trials]
+  random_trial = trials.shuffle!.shift
+
+  condition = conditions.sample
+  
+  if condition == "blank-screen"
+    random_trial += "&c=1"
+  elsif condition == "normal-http"
+    random_trial += "&c=2"
+  elsif condition == "slow-http"
+    random_trial += "&c=3"
+  else
+    random_trial += "&c=4"
+  end
+  
+  current_trial = @session.current_trial
+  @session.current_trial = current_trial + 1
+  @session.save
+  
+  redirect random_trial.to_sym
+end
+
+# TODO: what to do about refreshing the page?
+## Trial pages
+# Home page
+get "/home" do
+  @@page_title = "Trial #{@session.current_trial}"
+  
+
+  erb :home_page
+end
+
+# Category page
+get "/category" do
+  @@page_title = "Trial #{@session.current_trial}"
+
+  erb :category_page 
+end
+
+# Product page
+get "/product" do
+  @@page_title = "Trial #{@session.current_trial}"
+
+  erb :product_page
 end
 
 get "/results" do
@@ -120,30 +177,12 @@ get "/results" do
   
 end
 
-## Trial pages
-# Home page
-get "/home" do
-  @@page_title = "Home | " + ORGANIZATION
-  @active = "home"
-  erb :home_page
-end
-
-# Category page
-get "/category" do
-  @@page_title = "Categories | " + ORGANIZATION
-  @active = "categories"
-  erb :category_page 
-end
-
-# Product page
-get "/product" do
-  @@page_title = "Lego Brick 39479 | " + ORGANIZATION
-  @active = "product"
-  erb :product_page
-end
-
 get "/beacon" do
   # TODO: Use http://ipinfo.io/ to get location from IP later
+  # IP address
+  # Bandwidth
+  # Latency
+  # Page load time
   params.to_s
 end
 

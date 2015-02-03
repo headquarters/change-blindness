@@ -7,14 +7,14 @@
 		<meta name="viewport" content="width=device-width">
 		
 		<link rel="stylesheet" href="/css/normalize.css">
-		<link rel="stylesheet" href="/css/trisl.css">
+		<link rel="stylesheet" href="/css/trials.css">
 	</head>
 	<body>
 		<header class="clearfix">
           <div class="company-info">
-            <img src="/images/logo-brick.png" alt="Brick Mart logo" />
+            <img id="location-1" src="/images/logo-brick.png" alt="Brick Mart logo" />
             <div class="name-and-tagline">
-              <h1><%= ORGANIZATION %></h1>
+              <h1>Brick Mart</h1>
               <div class="subtitle">Individual bricks to complete your collection.</div>
             </div>
           </div>
@@ -25,7 +25,7 @@
                   <li><a href="#nogo">Sign Up</a></li>
                   <li><a href="#nogo">Account</a></li>
                   <li><a href="#nogo">Cart</a></li>
-                  <li><a href="#nogo">Wish List</a></li>
+                  <li><a href="#nogo">Wishlist</a></li>
               </ul>
             </nav>
           </div>
@@ -55,7 +55,7 @@
                 <li><a href="#nogo">Sales and Deals</a></li>
             </ul>
           <% end %>            
-          <div id="search">
+          <div id="location-2" class="search">
             <input type="text"> <button class="button secondary">Search</button>
           </div>
         </div>
@@ -67,9 +67,10 @@
         </div>
 		<footer>
           <a href="#nogo">About</a> | <a href="#nogo">Returns and Refunds</a> | <a href="#nogo">Help</a> | <a href="#nogo">Contact Us</a> | <a href="#nogo">Careers</a>
-          <div id="copyright">&copy; <%= ORGANIZATION %></div>
+          <div id="copyright">&copy; Brick Mart</div>
 		  
 		</footer>
+        <script src="/js/jquery-1.11.2.min.js"></script>
 		<script src="/js/trials.js"></script>		
 	</body>
 </html>
