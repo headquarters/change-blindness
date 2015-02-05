@@ -238,6 +238,7 @@ footer a {
     margin-top:0;
 }
 
+#also-viewed .nav-block img,
 .categories .nav-block img {
     display:block;
     margin:0.5em auto;

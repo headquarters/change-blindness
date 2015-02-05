@@ -12,7 +12,11 @@
 	<body>
 		<header class="clearfix">
           <div class="company-info">
-            <img id="location-1" src="/images/logo-brick.png" alt="Brick Mart logo" />
+            <% if request.params["r"] && request.params["l"] == "1" %>
+              <img id="location-1" src="/images/logo-brick-2.png" alt="Brick Mart logo" />
+            <% else %>
+              <img id="location-1" src="/images/logo-brick.png" alt="Brick Mart logo" />
+            <% end %>                        
             <div class="name-and-tagline">
               <h1>Brick Mart</h1>
               <div class="subtitle">Individual bricks to complete your collection.</div>
@@ -55,8 +59,13 @@
                 <li><a href="#nogo">Sales and Deals</a></li>
             </ul>
           <% end %>            
-          <div id="location-2" class="search">
-            <input type="text"> <button class="button secondary">Search</button>
+          <div class="search">
+            <% if request.params["r"] && request.params["l"] == "2" %>
+              <input id="location-2" type="text" value="Brick size, type, set...">
+            <% else %>
+              <input id="location-2" type="text">
+            <% end %>
+            <button class="button secondary">Search</button>
           </div>
         </div>
       

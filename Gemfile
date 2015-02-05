@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+gem 'pg'
+#gem 'dm-postgres-adapter'
+gem 'dm-sqlite-adapter'
+gem 'data_mapper'
+gem 'json'
+gem 'sinatra'

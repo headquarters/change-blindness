@@ -1,10 +1,13 @@
 require "rubygems"
+require "bundler/setup"
 require "sinatra"
 require "data_mapper"
 require "json"
 
-# Require the session file that contains the session secret and expiry time
-require "./session"
+enable :sessions
+
+set :session_secret, ENV["CHANGE_BLINDNESS_SESSION_SECRET"]
+set :sessions, :expire_after => 2592000
 
 set :bind, "0.0.0.0"
 
@@ -13,6 +16,8 @@ configure :development do
 end
 
 DataMapper.setup(:default, "sqlite:cb.db")
+
+#DataMapper.setup(:default, "postgres://postgres:#{ENV["POSTGRES_PW"]}@localhost/changeblindness")
 
 require "./models"
 
@@ -40,10 +45,9 @@ conditions = [
 
 # URL structure:
 # /<template_name>/<location_of_change>/<condition_of_change>
-# Template name: whether home, category, or product template is loaded
+# Template name: either home, category, or product template is loaded
 # Location of change: DOM element ID that will change
 # Condition of change: 1 of 4 possible conditions (randomly applied at time of request)
-# TODO: this will need to persist for the entire session
 trials = [
   "/home?l=1",
   "/home?l=1",
@@ -124,26 +128,35 @@ get "/trial" do
     session[:trials] = trials
   end
   
-  trials = session[:trials]
-  random_trial = trials.shuffle!.shift
-
-  condition = conditions.sample
-  
-  if condition == "blank-screen"
-    random_trial += "&c=1"
-  elsif condition == "normal-http"
-    random_trial += "&c=2"
-  elsif condition == "slow-http"
-    random_trial += "&c=3"
-  else
-    random_trial += "&c=4"
+  if !params.empty?
+    #TODO: Collect data from previous trial before redirecting to the next one
   end
   
-  current_trial = @session.current_trial
-  @session.current_trial = current_trial + 1
-  @session.save
+  if session[:trials].empty? && current_trial == 30
+    # Go to results
+    redirect "/results"
+  else 
+    trials = session[:trials]
+    random_trial = trials.shuffle!.shift
   
-  redirect random_trial.to_sym
+    condition = conditions.sample
+    
+    if condition == "blank-screen"
+      random_trial += "&c=1"
+    elsif condition == "normal-http"
+      random_trial += "&c=2"
+    elsif condition == "slow-http"
+      random_trial += "&c=3"
+    else
+      random_trial += "&c=4"
+    end
+    
+    current_trial = @session.current_trial + 1
+    @session.current_trial = current_trial
+    @session.save
+    
+    redirect random_trial.to_sym
+  end
 end
 
 # TODO: what to do about refreshing the page?
@@ -155,6 +168,13 @@ get "/home" do
 
   erb :home_page
 end
+
+get "/slow" do
+  # Slow down the HTTP pipe then redirect to home to measure bandwidth
+  #system()
+  
+  redirect "/"
+end 
 
 # Category page
 get "/category" do
@@ -183,13 +203,17 @@ get "/beacon" do
   # Bandwidth
   # Latency
   # Page load time
-  params.to_s
-end
-
-post "/browser-info" do
-  params.each do |key, value|
-    @session[key] = value
-  end
+  @session.ip_address = request.ip
+  @session.screen_width = params[:screen_width]
+  @session.screen_height = params[:screen_height]
+  @session.browser_width = params[:browser_width]
+  @session.browser_height = params[:browser_height]
+  @session.pixel_depth = params[:pixel_depth]
+  @session.platform = params[:platform]
+  @session.language = params[:language]
+  @session.browser = params[:browser]
+  @session.user_agent = params[:user_agent]
+  @session.bandwidth = params[:bw]
   
   @session.save
 end

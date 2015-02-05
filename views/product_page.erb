@@ -4,11 +4,11 @@
         <div id="product-image">
             <img src="/images/2x4-short-hero.png" alt="2x4 Short brick" />
             <ul id="colors">
-                <li class="active white">White</li>
+                <li class="white">White</li>
                 <li class="red">Red</li>
                 <li class="blue">Blue</li>
                 <li class="green">Green</li>
-                <li class="black">Black</li>
+                <li class="active black">Black</li>
             </ul>
         </div>
         <div id="product-info">
@@ -30,8 +30,11 @@
                 <span class="label">(39 available)</span>
             </div>
             <div class="add-to-cart">
-                <a id="location-3" href="#nogo" class="button">Add to Cart</a>
-                <!--<a href="#nogo" class="button">Put in Cart</a>-->
+                <% if request.params["r"] && request.params["l"] == "3" %>
+                    <a id="location-3" href="#nogo" class="button">Put in Cart</a>
+                <% else %>
+                    <a id="location-3" href="#nogo" class="button">Add to Cart</a>
+                <% end %>
                 <br />
                 <a href="#nogo" class="button secondary">Add to Wishlist</a>
             </div>
@@ -42,15 +45,23 @@
         <div class="col">
             <div class="nav-block">
                 <h4>1x6 Short</h4>
-                <img id="location-5" src="/images/1x6-short.png" alt="1x6 Short bricks" />
+                <% if request.params["r"] && request.params["l"] == "5" %>
+                    <img id="location-5" src="/images/1x6-short-flipped.png" alt="1x6 Short bricks" />
+                <% else %>
+                    <img id="location-5" src="/images/1x6-short.png" alt="1x6 Short bricks" />
+                <% end %>
                 <a href="#nogo" class="button">View 1x6 Short</a>
             </div>
         </div>
         <div class="col">
-            <div id="location-4" class="nav-block">
+            <div class="nav-block">
                 <h4>2x8 Tall</h4>
-                <img src="/images/2x8-tall.png" alt="2x8 Tall bricks" />
-                <a href="#nogo" class="button">View 2x8 Tall</a>
+                <% if request.params["r"] && request.params["l"] == "4" %>
+                    <img id="location-4" src="/images/2x8-tall-gray.png" alt="2x8 Tall bricks" />
+                <% else %>
+                    <img id="location-4" src="/images/2x8-tall-green.png" alt="2x8 Tall bricks" />
+                <% end %>
+                <a href="#nogo" class="button">View 2x8 Tall</a>                
             </div>
         </div>
         <div class="col">

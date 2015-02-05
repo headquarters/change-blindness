@@ -16,7 +16,6 @@
 			Hi there. Please don't view the source or open the console while taking part in this
 			research experiment.
 		-->
-		<!-- HTML shim needed? -->
 	</head>
 	<body>
 		<noscript>
@@ -31,8 +30,9 @@
 			</section>
         </div>
 		<script src="/js/jquery-1.11.2.min.js"></script>
-		<script src="/js/cb.js"></script>
+		<script src="/js/trials.js"></script>
 		<script src="/js/practice.js"></script>
+		<% if request.path == "/" %>		
 		<script>
 			BOOMR.subscribe('before_beacon', function(o) {
 				if (typeof o != "undefined") {
@@ -41,7 +41,26 @@
 						.attr("value", "Begin the Test");
 					$(".loader").remove();
 				}
-			});			
+			});
+			
+			//cache images that will be used in the study
+			var images = [
+				//Practice images
+				"/images/vehicle-hero-flipped.png",
+				"/images/car-colored.png",
+				
+				//Trial images
+				"/images/lego-bricks-set-2.jpeg",
+				"/images/logo-brick-2.png",
+				"/images/1x4-tall-flipped.png",
+				"/images/1x6-short-flipped.png",
+				"/images/2x4-short-red.png"
+			];
+			
+			for (var i = 0; i < images.length; i++) {
+				(new Image()).src = images[i];
+			}
 		</script>
+		<% end %>
 	</body>
 </html>

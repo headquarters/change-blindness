@@ -9,9 +9,9 @@ class Session
   property :created_at, DateTime
   property :has_given_consent, Boolean, :default => false
   property :mechanical_turk_code, String, :length => 128
-  property :ip_address, String, :length => 16
   
   # Browser data
+  property :ip_address, String, :length => 16
   property :screen_width, Integer
   property :screen_height, Integer
   property :browser_width, Integer
@@ -21,6 +21,7 @@ class Session
   property :language, String, :length => 32
   property :browser, String, :length => 64
   property :user_agent, String, :length => 192
+  property :bandwidth, Integer
   
   has n, :trial
 end
@@ -31,9 +32,18 @@ class Trial
   property :id, Serial
   property :created_at, DateTime
   
-  property :page_name, String, :length => 32
+  # Page stats
+  property :page_type, String, :length => 32
   property :changed_area, String, :length => 128
+  property :change_type, String, :length => 16
+  
+  # User stats
   property :selected_area, String, :length => 128, :default => ""
+  property :selection_time, Integer
+  
+  # Boomerang stats
+  property :page_load_time, Integer
+  property :page_latency, Float
   
   belongs_to :session
 end

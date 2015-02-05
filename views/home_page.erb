@@ -5,8 +5,11 @@
             Clearance sale on 2014 model individual bricks from all manufacturers. <br />
             Mix n' match colors and sizes. As always, free shipping!
             <br />
-            <a href="#nogo" class="button" id="location-3">Shop Clearance</a>
-            <!--<a href="#nogo" class="button">View the Sales</a>-->
+            <% if request.params["r"] && request.params["l"] == "3" %>
+                <a href="#nogo" class="button" id="location-3">View the Sales</a>
+            <% else %>
+                <a href="#nogo" class="button" id="location-3">Shop Clearance</a>
+            <% end %>
         </p>
     </div>
     <h2>Shop By</h2>
@@ -21,14 +24,22 @@
         <div class="col">
             <div class="nav-block" id="location-4">
                 <h3>Size</h3>
-                <img src="/images/lego-bricks-various-sizes.jpeg" alt="Various sized bricks" />
+                <% if request.params["r"] && request.params["l"] == "4" %>
+                    <img src="/images/lego-bricks-various-sizes-white.png" alt="Various sized bricks" />
+                <% else %>
+                    <img src="/images/lego-bricks-various-sizes-red.png" alt="Various types of bricks" />
+                <% end %>
                 <a href="#nogo" class="button">View Sizes</a>
             </div>
         </div>
         <div class="col">
             <div class="nav-block">
                 <h3>Original Set</h3>
-                <img src="/images/lego-bricks-set.jpeg" alt="Lego bricks set" id="location-5" />
+                <% if request.params["r"] && request.params["l"] == "5" %>
+                    <img src="/images/lego-bricks-set-2.jpeg" alt="Lego bricks set" id="location-5" />
+                <% else %>
+                    <img src="/images/lego-bricks-set.jpeg" alt="Lego bricks set" id="location-5" />
+                <% end %>
                 <a href="#nogo" class="button">View Sets</a>
             </div>
         </div>

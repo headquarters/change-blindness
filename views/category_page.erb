@@ -38,8 +38,11 @@
                 The 2x2 tall brick comes in numerous colors. Its size makes it a versatile piece to complete
                 any model or collection. 
                 <br />
-                <a href="#nogo" class="button" id="location-3">Shop 2x2 Tall</a>
-                <!--<a href="#nogo" class="button">Best Sellers</a>-->
+                <% if request.params["r"] && request.params["l"] == "3" %>
+                    <a href="#nogo" class="button" id="location-3">Best Sellers</a>
+                <% else %>
+                    <a href="#nogo" class="button" id="location-3">Shop 2x2 Tall</a>
+                <% end %>
             </p>
         </div>
 
@@ -48,24 +51,32 @@
             <div class="col">
                 <div id="location-4" class="nav-block">
                     <h4>2x4 Short</h4>
-                    <img src="/images/2x4-short.png" alt="2x4 Short bricks" />
+                    <% if request.params["r"] && request.params["l"] == "4" %>
+                        <img src="/images/2x4-short-red.png" alt="2x4 Short bricks" />
+                    <% else %>
+                        <img src="/images/2x4-short.png" alt="2x4 Short bricks" />
+                    <% end %>
                     <a href="#nogo" class="button">View 2x4 Short</a>
                 </div>
             </div>
+            <div class="col">
+                <div class="nav-block">
+                    <h4>1x4 Tall</h4>
+                    <% if request.params["r"] && request.params["l"] == "5" %>
+                        <img id="location-5" src="/images/1x4-tall-flipped.png" alt="1x4 Tall bricks" />
+                    <% else %>
+                        <img id="location-5" src="/images/1x4-tall.png" alt="1x4 Tall bricks" />
+                    <% end %>
+                    <a href="#nogo" class="button">View 1x4 Tall</a>
+                </div>
+            </div>  
             <div class="col">
                 <div class="nav-block">
                     <h4>2x4 Tall</h4>
                     <img src="/images/2x4-tall.png" alt="2x4 Tall bricks" />
                     <a href="#nogo" class="button">View 2x4 Tall</a>
                 </div>
-            </div>
-            <div class="col">
-                <div class="nav-block">
-                    <h4>1x6 Tall</h4>
-                    <img id="location-5" src="/images/1x6-tall.png" alt="1x6 Tall bricks" />
-                    <a href="#nogo" class="button">View 1x6 Tall</a>
-                </div>
-            </div>        
+            </div>      
         </div>
     </div>
 </div>
