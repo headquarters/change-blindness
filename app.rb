@@ -130,6 +130,11 @@ get "/trial" do
   
   if !params.empty?
     #TODO: Collect data from previous trial before redirecting to the next one
+    if params[:c] == 3
+      #reset the bandwidth
+      system("./reset_http.sh")
+    end
+    
   end
   
   if session[:trials].empty? && current_trial == 30
@@ -163,18 +168,14 @@ end
 ## Trial pages
 # Home page
 get "/home" do
-  @@page_title = "Trial #{@session.current_trial}"
+  if params[:r]
+    system("./slow_http.sh")
+  end
   
+  @@page_title = "Trial #{@session.current_trial}"
 
   erb :home_page
 end
-
-get "/slow" do
-  # Slow down the HTTP pipe then redirect to home to measure bandwidth
-  #system()
-  
-  redirect "/"
-end 
 
 # Category page
 get "/category" do
@@ -199,10 +200,6 @@ end
 
 get "/beacon" do
   # TODO: Use http://ipinfo.io/ to get location from IP later
-  # IP address
-  # Bandwidth
-  # Latency
-  # Page load time
   @session.ip_address = request.ip
   @session.screen_width = params[:screen_width]
   @session.screen_height = params[:screen_height]

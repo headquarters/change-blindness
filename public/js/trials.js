@@ -201,4 +201,4 @@ console.log(selectionTimeEnd, selectionTimeStart);
     return self;    
 })(jQuery);
 
-//Trial.init();
+Trial.init();
