@@ -31,19 +31,27 @@ class Trial
   
   property :id, Serial
   property :created_at, DateTime
+  property :trial_number, Integer
   
   # Page stats
   property :page_type, String, :length => 32
-  property :changed_area, String, :length => 128
+  property :change_location, String, :length => 128
   property :change_type, String, :length => 16
-  
+  property :element_x, Float
+  property :element_y, Float
+  property :element_width, Integer
+  property :element_height, Integer
+
   # User stats
-  property :selected_area, String, :length => 128, :default => ""
+  property :selected_location, String, :length => 128, :default => ""
   property :selection_time, Integer
+  property :selection_status, String, :length => 16
+  property :clicked_x, Float
+  property :clicked_y, Float
   
   # Boomerang stats
   property :page_load_time, Integer
-  property :page_latency, Float
+  property :page_latency, Integer
   
   belongs_to :session
 end

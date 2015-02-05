@@ -3,6 +3,7 @@ require "bundler/setup"
 require "sinatra"
 require "data_mapper"
 require "json"
+require "securerandom"
 
 enable :sessions
 
@@ -24,6 +25,8 @@ require "./models"
 DataMapper.auto_upgrade! 
 DataMapper.finalize
 
+#Trial.raise_on_save_failure = true 
+
 # Full <title> passed to a view by being global
 @@page_title = ""
 
@@ -34,13 +37,38 @@ INCREMENT = 100.0/TOTAL_TRIALS
 
 conditions = [
   # Condition 1: Blank screen for 0.5 second, change element while hidden, then show again
+  "blank-screen",
+  "blank-screen",  
+  "blank-screen",  
+  "blank-screen",  
+  "blank-screen",  
+  "blank-screen",  
+  "blank-screen",  
+  "blank-screen",  
+  "blank-screen",  
   "blank-screen",  
   # Condition 2: Normal HTTP request; second page contains changed item
   "normal-http",
-  # Condition 3: Normal HTTP request with increased latency; second page contains changed item
-  "slow-http",
-  # Condition 4: Change element on the client
-  "no-http"
+  "normal-http",
+  "normal-http",
+  "normal-http",
+  "normal-http",
+  "normal-http",
+  "normal-http",
+  "normal-http",
+  "normal-http",
+  "normal-http",  
+  # Condition 3: Change element on the client
+  "no-http",
+  "no-http",
+  "no-http",
+  "no-http",
+  "no-http",
+  "no-http",
+  "no-http",
+  "no-http",
+  "no-http",
+  "no-http",  
 ]
 
 # URL structure:
@@ -118,8 +146,7 @@ end
 
 # Condition 1: Blank screen for 0.5 second, change element while hidden, then show again
 # Condition 2: Normal HTTP request; second page contains changed item
-# Condition 3: Normal HTTP request with increased latency; second page contains changed item
-# Condition 4: Change element on the client
+# Condition 3: Change element on the client
 # Each of the three page templates can change in one of 5 ways.
 # Each trial consists of seeing one of the three pages (home, category, or product),
 # where one of the conditional changes happens. 
@@ -127,17 +154,42 @@ get "/trial" do
   if session[:trials].nil?
     session[:trials] = trials
   end
-  
+
+
   if !params.empty?
-    #TODO: Collect data from previous trial before redirecting to the next one
-    if params[:c] == 3
-      #reset the bandwidth
-      system("./reset_http.sh")
-    end
+    # Collect data from previous trial before redirecting to the next one
+   
+    trial = Trial.create(
+      :session_id => @session.id,
+      :trial_number => @session.current_trial,
+      :page_type => params[:page_type],
+      :change_location => params[:change_location],
+      :change_type => params[:change_type],
+      :element_x => params[:element_x],
+      :element_y => params[:element_y],
+      :element_width => params[:element_width],
+      :element_height => params[:element_height],
+      :selected_location => params[:selected_location],
+      :selection_time => params[:selection_time],
+      :selection_status => params[:selection_status],
+      :clicked_x => params[:clicked_x],
+      :clicked_y => params[:clicked_y],
+      :page_load_time => params[:page_load_time],
+      :page_latency => params[:page_latency]
+    )
     
+puts "#####################"
+puts trial.saved?
+puts "#####################"
   end
   
-  if session[:trials].empty? && current_trial == 30
+  current_trial = @session.current_trial + 1
+
+puts ">>>>>>>>>>>>>>>>>>>>>>>>>>"
+puts session[:trials].inspect
+puts current_trial
+puts ">>>>>>>>>>>>>>>>>>>>>>>>>>"
+  if session[:trials].empty? && current_trial > 30
     # Go to results
     redirect "/results"
   else 
@@ -150,13 +202,10 @@ get "/trial" do
       random_trial += "&c=1"
     elsif condition == "normal-http"
       random_trial += "&c=2"
-    elsif condition == "slow-http"
-      random_trial += "&c=3"
     else
       random_trial += "&c=4"
     end
     
-    current_trial = @session.current_trial + 1
     @session.current_trial = current_trial
     @session.save
     
@@ -167,11 +216,7 @@ end
 # TODO: what to do about refreshing the page?
 ## Trial pages
 # Home page
-get "/home" do
-  if params[:r]
-    system("./slow_http.sh")
-  end
-  
+get "/home" do  
   @@page_title = "Trial #{@session.current_trial}"
 
   erb :home_page
@@ -192,10 +237,20 @@ get "/product" do
 end
 
 get "/results" do
-  # if not at 100% complete, redirect to another trial
+  if !session[:trials].empty? || @session.current_trial < 30
+    redirect "/trial"
+  end
   
-  # generate a mechanical turk code
+  if @session.mechanical_turk_code
+    @mechanical_turk_code = @session.mechanical_turk_code
+  else
+    @mechanical_turk_code = SecureRandom.hex(5)
+    
+    @session.mechanical_turk_code = @mechanical_turk_code
+    @session.save
+  end
   
+  erb :results, :layout => :practice_layout
 end
 
 get "/beacon" do

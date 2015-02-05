@@ -126,3 +126,10 @@ input[disabled="disabled"] {
     width:280px;
     margin-right:10px;
 }
+
+#mt-code {
+    display:inline-block;
+    font-size:1.4em;
+    background:lightyellow;
+    padding:0.5em;
+}

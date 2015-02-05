@@ -6,6 +6,9 @@ var Trial = (function($){
     var queryStringObject = getQueryStringAsObject();
     var viewDelay = 3000;
     var selectDelay = 5000;
+    var minScreenWidth = 1040;
+    var minScreenHeight = 940;
+    var screenSizeOk = false;
     var selectionTimeStart;
     var selectionTimeEnd;
     var selectionTimoutID;
@@ -24,6 +27,9 @@ var Trial = (function($){
         
         $(document).on("click", verifyClick);
         
+        checkScreenSize();
+        
+        $(window).on("resize", checkScreenSize);
         
         if (queryStringObject["r"] != undefined) {
             //second page load with the change, don't set 3 second timout
@@ -50,20 +56,24 @@ console.log("Change condition 1, 0.5 second blank screen");
                 selectionTimeStart = Date.now();
                 startSelectionTimer();
             }, 500);
-        } else if (changeCondition == 2 || changeCondition == 3) {
+        } else if (changeCondition == 2) {
+            
             //normal HTTP request or HTTP request with latency
             //set window.location to followup page, which will have modified HTML
 
             if (queryStringObject["r"] != undefined) {
+console.log("Page reloaded, awaiting selection");
                 //this is the request with the changed element,
                 //do not refresh, otherwise we'd be in a loop
                 selectionTimeStart = Date.now();
                 
                 startSelectionTimer();
             } else {
+console.log("Change condition 2 or 3, reloading page");                
                 //reload the page with the new HTML
                 //"r" param is used to prevent this from happening a second time
-                window.location = window.location + "&r=1";
+                //include timestamp to prevent caching
+                window.location = window.location + "&r=1&t=" + Date.now();
             }
         } else {
             //change element client with no visual disruption
@@ -75,6 +85,8 @@ console.log("Change condition 4, instant change");
         }
     }
 
+//TODO: may need to request these images to prevent extra "flicker" that might give away the change
+//Or at least set width and height on images to ensure they take up appropriate space while changing
     function changeElement(){
         if (changeLocation == 1) {
             //logo change
@@ -115,7 +127,7 @@ console.log("Change condition 4, instant change");
     function startSelectionTimer(){
         selectionTimoutID = setTimeout(failedToMakeSelection, selectDelay);
     
-console.log("Selection timer set", selectionTimoutID);
+console.log("Selection timer set");
     }
     
     function failedToMakeSelection(){
@@ -127,8 +139,7 @@ console.log("Selection timer set", selectionTimoutID);
         queryString = $.param(data);
         
         //send data for this trial to back-end as query string
-        //window.location = "/trial?";
-console.log("Failed to make a selection", queryString);
+        window.location = "/trial?" + queryString;
     }
     
     function verifyClick(e){
@@ -139,41 +150,61 @@ console.log("Failed to make a selection", queryString);
         queryString = $.param(data);
         
         //send data for this trial to back-end as query string
-        //window.location = "/trial?";
-console.log("verifyClick", queryString);
+        window.location = "/trial?" + queryString;
     }
     
     function gatherData(event){
-        var data = {};
-        //gather position data for element that was changed
-        var changedElement = $("#location-" + changeLocation);
-        var changedElementOffset = changedElement.offset();
-        
-        data["elementX"] = changedElementOffset.left;
-        data["elementY"] = changedElementOffset.top;
-        data["elementWidth"] = changedElement.outerWidth();
-        data["elementHeight"] = changedElement.outerHeight();
-        
-        //gather position data for position that was clicked
-        data["clickedX"] = (event) ? event.clientX : "null";
-        data["clickedY"] = (event) ? event.clientY : "null";
-        
         //something was clicked, so throw away failure timer
         clearTimeout(selectionTimoutID);        
         selectionTimeEnd = Date.now();
         
+        var data = {};
+        
+        //gather position data for element that was changed
+        var changedElement = $("#location-" + changeLocation);
+        var changedElementOffset = changedElement.offset();
+        
+        data["page_type"] = pageType;
+        data["change_location"] = changeLocation;
+        data["change_type"] = changeCondition;
+        data["element_x"] = changedElementOffset.left;
+        data["element_y"] = changedElementOffset.top;
+        data["element_width"] = changedElement.outerWidth();
+        data["element_height"] = changedElement.outerHeight();
+        
+        //gather position data for position that was clicked
+        data["clicked_x"] = (event) ? event.clientX : "null";
+        data["clicked_y"] = (event) ? event.clientY : "null";
+        
+
+        
         if (event && (event.target.id === "location-" + changeLocation)) {
-            data["selectionStatus"] = "correct";
-        } else if (event && e.target.id !== "location-" + changeLocation) {
-            data["selectionStatus"] = "incorrect";
+            data["selection_status"] = "correct";
+        } else if (event && event.target.id !== "location-" + changeLocation) {
+            data["selection_status"] = "incorrect";
         } else {
-            data["selectionStatus"] = "timeout";
+            data["selection_status"] = "timeout";
+        }
+        
+        if (event && event.target.id) {
+            data["selected_location"] = event.target.id;
+        } else {
+            data["selected_location"] = "null";
         }
 
-console.log(selectionTimeEnd, selectionTimeStart);        
-        data["selectionTime"] = (selectionTimeEnd - selectionTimeStart);
+        data["page_load_time"] = -1;
+        data["page_latency"] = -1;  
+        data["selection_time"] = (selectionTimeEnd - selectionTimeStart);
         
         return data;
+    }
+    
+    function checkScreenSize(args) {
+        if (window.outerWidth < minScreenWidth || window.outerHeight < minScreenHeight) {
+            alert("The size of your screen is too small for this study. Please adjust your screen size to at least " + minScreenWidth + " pixels wide by " + minScreenHeight + " pixels high.");
+        } else {
+            screenSizeOk = true;
+        }
     }
     
     function getQueryStringAsObject(string) {
