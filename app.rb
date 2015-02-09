@@ -12,13 +12,22 @@ set :sessions, :expire_after => 2592000
 
 set :bind, "0.0.0.0"
 
-configure :development do
-  DataMapper::Logger.new($stdout, :debug)
+# max_age is in seconds
+# TODO: test out following line
+set :static_cache_control, [:public, :max_age => 3600]
+
+
+configure :production do
+  # Do not serve static assets with sinatra in production
+  #set :static, false
+  DataMapper.setup(:default, "postgres://postgres:#{ENV["POSTGRES_PW"]}@localhost/changeblindness")
 end
 
-DataMapper.setup(:default, "sqlite:cb.db")
-
-#DataMapper.setup(:default, "postgres://postgres:#{ENV["POSTGRES_PW"]}@localhost/changeblindness")
+configure :development do
+  DataMapper.setup(:default, "sqlite:cb.db")
+  
+  DataMapper::Logger.new($stdout, :debug)
+end
 
 require "./models"
 

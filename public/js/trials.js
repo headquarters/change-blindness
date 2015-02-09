@@ -8,7 +8,8 @@ var Trial = (function($){
     var selectDelay = 5000;
     var minScreenWidth = 1040;
     var minScreenHeight = 940;
-    var screenSizeOk = false;
+    var warningModal;
+    var allowClick = true;
     var selectionTimeStart;
     var selectionTimeEnd;
     var selectionTimoutID;
@@ -31,6 +32,7 @@ var Trial = (function($){
         
         $(window).on("resize", checkScreenSize);
         
+return;
         if (queryStringObject["r"] != undefined) {
             //second page load with the change, don't set 3 second timout
             runTrial();
@@ -143,6 +145,10 @@ console.log("Selection timer set");
     }
     
     function verifyClick(e){
+        if(!allowClick){
+            return false;
+        }
+
         e.preventDefault();
         var queryString;
         var data = gatherData(e);
@@ -200,10 +206,23 @@ console.log("Selection timer set");
     }
     
     function checkScreenSize(args) {
+        var modal = $('<div id="screen-size-warning" class="modal"></div>')
+              .text('The size of your screen is too small for this study. Please adjust your screen size to at least ' + minScreenWidth + ' pixels wide by ' + minScreenHeight + ' pixels high to continue.');
+
         if (window.outerWidth < minScreenWidth || window.outerHeight < minScreenHeight) {
-            alert("The size of your screen is too small for this study. Please adjust your screen size to at least " + minScreenWidth + " pixels wide by " + minScreenHeight + " pixels high.");
+            allowClick = false;
+            $.magnificPopup.open({
+              items: {
+                src: modal, 
+                type: 'inline'
+              },
+              modal: true,
+              preloader: false
+            });
         } else {
-            screenSizeOk = true;
+            allowClick = true;
+
+            $.magnificPopup.close();
         }
     }
     

@@ -350,3 +350,12 @@ footer a {
     background:#A69586;
     border-color:#A69586;
 }
+
+.modal {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width: auto;
+  max-width: 500px;
+  margin: 20px auto;
+}
