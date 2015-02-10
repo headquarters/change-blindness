@@ -26,19 +26,34 @@ var Trial = (function($){
         changeLocation = queryStringObject["l"];
         changeCondition = queryStringObject["c"];
         
+        //TODO: disable this until after the 3 seconds is up or on second page load, depending on condition
         $(document).on("click", verifyClick);
         
         checkScreenSize();
         
         $(window).on("resize", checkScreenSize);
         
-return;
+
         if (queryStringObject["r"] != undefined) {
             //second page load with the change, don't set 3 second timout
             runTrial();
         } else {
 console.log("Starting 3 second timer...");            
             setTimeout(runTrial, viewDelay);
+        }
+
+        //pre-fetch images to prevent change flicker
+        var images = [   
+                //Trial images
+                "/images/lego-bricks-set-2.jpeg",
+                "/images/logo-brick-2.png",
+                "/images/1x4-tall-flipped.png",
+                "/images/1x6-short-flipped.png",
+                "/images/2x4-short-red.png"
+            ];
+            
+        for (var i = 0; i < images.length; i++) {
+            (new Image()).src = images[i];
         }
     };
     
@@ -59,9 +74,7 @@ console.log("Change condition 1, 0.5 second blank screen");
                 startSelectionTimer();
             }, 500);
         } else if (changeCondition == 2) {
-            
-            //normal HTTP request or HTTP request with latency
-            //set window.location to followup page, which will have modified HTML
+            //normal HTTP request
 
             if (queryStringObject["r"] != undefined) {
 console.log("Page reloaded, awaiting selection");
@@ -71,7 +84,7 @@ console.log("Page reloaded, awaiting selection");
                 
                 startSelectionTimer();
             } else {
-console.log("Change condition 2 or 3, reloading page");                
+console.log("Change condition 2, reloading page");                
                 //reload the page with the new HTML
                 //"r" param is used to prevent this from happening a second time
                 //include timestamp to prevent caching
@@ -139,9 +152,10 @@ console.log("Selection timer set");
         var data = gatherData();
         
         queryString = $.param(data);
-        
-        //send data for this trial to back-end as query string
-        window.location = "/trial?" + queryString;
+
+        var href = "/trial?" + queryString;
+
+        showNextTrialModal(href);
     }
     
     function verifyClick(e){
@@ -154,11 +168,43 @@ console.log("Selection timer set");
         var data = gatherData(e);
         
         queryString = $.param(data);
+
+        var href = "/trial?" + queryString;
         
-        //send data for this trial to back-end as query string
-        window.location = "/trial?" + queryString;
+        showNextTrialModal(href);
     }
     
+    function showNextTrialModal(href){
+        $(window).off("resize", checkScreenSize);
+        $(document).off("click", verifyClick);
+
+
+
+        var modal = $('<div id="trial-complete" class="modal">\
+                    <strong>Trial Complete</strong>\
+                    <p>\
+                        Click "Next Trial" when you\'re ready. Remember that:\
+                        <ol>\
+                            <li>A page loads and is visible for 3 seconds.</li>\
+                            <li>Something on the page will change.</li>\
+                            <li>You have 5 seconds to pick the element that changed by clicking on it.</li>\
+                        </ol>\
+                    </p>\
+                    <a href="' + href + '" class="button">Next Trial</a>\
+                </div>');
+
+        $.magnificPopup.open({
+              items: {
+                src: modal, 
+                type: 'inline'
+              },
+              modal: true,
+              preloader: false
+        });
+        
+        $(document).on("click", "#trial-complete .button", function(){ console.log(this); $.magnificPopup.close(); });        
+    }
+
     function gatherData(event){
         //something was clicked, so throw away failure timer
         clearTimeout(selectionTimoutID);        
@@ -179,8 +225,8 @@ console.log("Selection timer set");
         data["element_height"] = changedElement.outerHeight();
         
         //gather position data for position that was clicked
-        data["clicked_x"] = (event) ? event.clientX : "null";
-        data["clicked_y"] = (event) ? event.clientY : "null";
+        data["clicked_x"] = (event) ? event.clientX : -1;
+        data["clicked_y"] = (event) ? event.clientY : -1;
         
 
         
@@ -195,7 +241,7 @@ console.log("Selection timer set");
         if (event && event.target.id) {
             data["selected_location"] = event.target.id;
         } else {
-            data["selected_location"] = "null";
+            data["selected_location"] = -1;
         }
 
         data["page_load_time"] = -1;
@@ -207,7 +253,8 @@ console.log("Selection timer set");
     
     function checkScreenSize(args) {
         var modal = $('<div id="screen-size-warning" class="modal"></div>')
-              .text('The size of your screen is too small for this study. Please adjust your screen size to at least ' + minScreenWidth + ' pixels wide by ' + minScreenHeight + ' pixels high to continue.');
+              .text('The size of your screen is too small for this study. \
+                    Please adjust your screen size to at least ' + minScreenWidth + ' pixels wide by ' + minScreenHeight + ' pixels high to continue.');
 
         if (window.outerWidth < minScreenWidth || window.outerHeight < minScreenHeight) {
             allowClick = false;

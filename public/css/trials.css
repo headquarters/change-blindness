@@ -29,6 +29,11 @@
     color:#fff;
 }
 
+#trial-complete .button {
+    border-color #ccc;
+    background:#333;
+}
+
 a {
     color:dodgerblue;
     text-decoration: none;

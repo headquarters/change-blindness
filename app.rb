@@ -12,18 +12,16 @@ set :sessions, :expire_after => 2592000
 
 set :bind, "0.0.0.0"
 
-# max_age is in seconds
-# TODO: test out following line
-set :static_cache_control, [:public, :max_age => 3600]
-
-
 configure :production do
   # Do not serve static assets with sinatra in production
-  #set :static, false
+  set :static, false
   DataMapper.setup(:default, "postgres://postgres:#{ENV["POSTGRES_PW"]}@localhost/changeblindness")
 end
 
 configure :development do
+  # max_age is in seconds 
+  set :static_cache_control, [:public, :max_age => 3600]
+
   DataMapper.setup(:default, "sqlite:cb.db")
   
   DataMapper::Logger.new($stdout, :debug)
@@ -34,7 +32,7 @@ require "./models"
 DataMapper.auto_upgrade! 
 DataMapper.finalize
 
-#Trial.raise_on_save_failure = true 
+Trial.raise_on_save_failure = true 
 
 # Full <title> passed to a view by being global
 @@page_title = ""
@@ -44,7 +42,7 @@ TOTAL_TRIALS = 30
 # Use round() when displaying.
 INCREMENT = 100.0/TOTAL_TRIALS
 
-conditions = [
+conditions_pool = [
   # Condition 1: Blank screen for 0.5 second, change element while hidden, then show again
   "blank-screen",
   "blank-screen",  
@@ -85,7 +83,7 @@ conditions = [
 # Template name: either home, category, or product template is loaded
 # Location of change: DOM element ID that will change
 # Condition of change: 1 of 4 possible conditions (randomly applied at time of request)
-trials = [
+trials_pool = [
   "/home?l=1",
   "/home?l=1",
   "/home?l=2",
@@ -149,7 +147,8 @@ end
 
 get "/start-test" do
   # Store the full array of trials here, for randomly picking during each /trial request
-  session[:trials] = trials
+  session[:trials] = trials_pool
+  session[:conditions] = conditions_pool
   erb :start_test, :layout => :practice_layout
 end
 
@@ -161,13 +160,19 @@ end
 # where one of the conditional changes happens. 
 get "/trial" do
   if session[:trials].nil?
-    session[:trials] = trials
+    session[:trials] = trials_pool
   end
 
+  if session[:conditions].nil?
+    session[:conditions] = conditions_pool
+  end
 
   if !params.empty?
     # Collect data from previous trial before redirecting to the next one
-   
+#puts "*******************"
+#puts params.inspect
+#puts "*******************"
+
     trial = Trial.create(
       :session_id => @session.id,
       :trial_number => @session.current_trial,
@@ -187,36 +192,39 @@ get "/trial" do
       :page_latency => params[:page_latency]
     )
     
-puts "#####################"
-puts trial.saved?
-puts "#####################"
+#puts "#####################"
+#puts trial.saved?
+#puts "#####################"
+    @session.current_trial = @session.current_trial + 1
+    @session.save
   end
   
-  current_trial = @session.current_trial + 1
+  current_trial = @session.current_trial
 
 puts ">>>>>>>>>>>>>>>>>>>>>>>>>>"
 puts session[:trials].inspect
+puts session[:trials].size
+puts session[:conditions].inspect
+puts session[:conditions].size
 puts current_trial
-puts ">>>>>>>>>>>>>>>>>>>>>>>>>>"
-  if session[:trials].empty? && current_trial > 30
+#puts ">>>>>>>>>>>>>>>>>>>>>>>>>>"
+  if current_trial > 30
     # Go to results
     redirect "/results"
   else 
     trials = session[:trials]
     random_trial = trials.shuffle!.shift
   
-    condition = conditions.sample
-    
+    conditions = session[:conditions]
+    condition = conditions.shuffle!.shift
+
     if condition == "blank-screen"
       random_trial += "&c=1"
     elsif condition == "normal-http"
       random_trial += "&c=2"
     else
-      random_trial += "&c=4"
+      random_trial += "&c=3"
     end
-    
-    @session.current_trial = current_trial
-    @session.save
     
     redirect random_trial.to_sym
   end

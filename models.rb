@@ -31,19 +31,19 @@ class Trial
   
   property :id, Serial
   property :created_at, DateTime
-  property :trial_number, Integer
+  property :trial_number, Integer, :default => 1
   
   # Page stats
   property :page_type, String, :length => 32
-  property :change_location, String, :length => 128
-  property :change_type, String, :length => 16
+  property :change_location, String, :length => 32
+  property :change_type, String, :length => 32
   property :element_x, Float
   property :element_y, Float
   property :element_width, Integer
   property :element_height, Integer
 
   # User stats
-  property :selected_location, String, :length => 128, :default => ""
+  property :selected_location, String, :length => 128
   property :selection_time, Integer
   property :selection_status, String, :length => 16
   property :clicked_x, Float
