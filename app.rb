@@ -20,7 +20,7 @@ configure :production do
   db_host = ENV["OPENSHIFT_POSTGRESQL_DB_HOST"]
   db_port = ENV["OPENSHIFT_POSTGRESQL_DB_PORT"]
   db_name = ENV["OPENSHIFT_GEAR_NAME"]
-  DataMapper.setup(:default, "postgresql://#{db_user}:#{db_password}@#{db_host}:#{db_port}/#{db_name}")
+  DataMapper.setup(:default, "postgres://#{db_user}:#{db_password}@#{db_host}:#{db_port}/#{db_name}")
 end
 
 configure :development do

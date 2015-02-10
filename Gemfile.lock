@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://mirror.ops.rhcloud.com/mirror/ruby/
   specs:
     addressable (2.3.7)
     bcrypt (3.1.10)
