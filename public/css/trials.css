@@ -312,6 +312,21 @@ footer a {
     background:black;
 }
 
+#product h2 {
+    margin:0.5em 0;
+}
+
+#product h4 {
+    font-size:1.2em;
+    margin-top:0;
+    margin-bottom:0.5em;
+}
+
+#product h5 {
+    font-size:1em;
+    margin-bottom:0.5em;
+}
+
 #product-info {
     float:right;
     width:550px;
