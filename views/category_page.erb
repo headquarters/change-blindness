@@ -1,40 +1,39 @@
 <div id="category">
-    <h2>Bricks</h2>
+    <h2 id="heading-2">Bricks</h2>
     <div id="product-nav">
-        <ul>
-          <li>
-            <a href="#nogo">Category</a>
-            <ul>
-              <li class="active">&rsaquo;<a href="#nogo">Bricks</a></li>
-              <li><a href="#nogo">Platforms</a></li>
-              <li><a href="#nogo">Figures</a></li>
-              <li><a href="#nogo">Vehicle Accessories</a></li>
+        <ul id="product-nav-list">
+          <li id="product-nav-list-item-1">
+            <a id="product-nav-link-1" href="#nogo">Category</a>
+            <ul id="product-nav-sublist-1">
+              <li id="product-nav-sublist-item-1" class="active">&rsaquo;<a id="product-nav-sublist-link-1" href="#nogo">Bricks</a></li>
+              <li id="product-nav-sublist-item-2"><a id="product-nav-sublist-link-1" href="#nogo">Platforms</a></li>
+              <li id="product-nav-sublist-item-3"><a id="product-nav-sublist-link-2" href="#nogo">Figures</a></li>
+              <li id="product-nav-sublist-item-4"><a id="product-nav-sublist-link-3" href="#nogo">Vehicle Accessories</a></li>
             </ul>
           </li>
-          <li>
-            <a href="#nogo">Type</a>
-            <ul>
-              <li><a href="#nogo">Individual Pieces</a></li>
-              <li><a href="#nogo">Sets</a></li>
+          <li id="product-nav-list-item-2">
+            <a id="product-nav-link-2" href="#nogo">Type</a>
+            <ul id="product-nav-sublist-2">
+              <li id="product-nav-sublist-item-5"><a id="product-nav-sublist-link-4" href="#nogo">Individual Pieces</a></li>
+              <li id="product-nav-sublist-item-6"><a id="product-nav-sublist-link-5" href="#nogo">Sets</a></li>
             </ul>
           </li>
-          <li>
-            <a href="#nogo">Manufacturer</a>
-            <ul>
-              <li><a href="#nogo">Lego&reg;</a></li>
-              <li><a href="#nogo">MegaBloks&reg;</a></li>
-              <li><a href="#nogo">Lincoln Log&reg;</a></li>
+          <li id="product-nav-list-item-3">
+            <a id="product-nav-link-3" href="#nogo">Manufacturer</a>
+            <ul id="product-nav-sublist-3">
+              <li id="product-nav-sublist-item-7"><a id="product-nav-sublist-link-6" href="#nogo">Lego&reg;</a></li>
+              <li id="product-nav-sublist-item-8"><a id="product-nav-sublist-link-7" href="#nogo">MegaBloks&reg;</a></li>
+              <li id="product-nav-sublist-item-9"><a id="product-nav-sublist-link-8" href="#nogo">Lincoln Log&reg;</a></li>
             </ul>
           </li>
-        
-          <li><a href="#nogo">Sales and Deals</a></li>
+          <li id="product-nav-list-item-4"><a id="product-nav-link-4" href="#nogo">Sales and Deals</a></li>
         </ul>
     </div>
     <div id="category-col">
-        <h3>Best Seller</h3>
+        <h3 id="heading-3">Best Seller</h3>
         <div id="hero" class="clearfix">
-            <img src="/images/2x2-tall-hero.png" alt="2x2 Tall brick" />
-            <p>
+            <img id="hero-image" src="/images/2x2-tall-hero.png" alt="2x2 Tall brick" />
+            <p id="hero-text">
                 The 2x2 tall brick comes in numerous colors. Its size makes it a versatile piece to complete
                 any model or collection. 
                 <br />
@@ -48,33 +47,33 @@
 
         <h3>Popular</h3>
         <div id="popular-categories" class="categories row">
-            <div class="col">
-                <div id="location-4" class="nav-block">
-                    <h4>2x4 Short</h4>
+            <div id="popular-category-1" class="col">
+                <div id="popular-categories-block-1" class="nav-block">
+                    <h4 id="popular-category-heading-1">2x4 Short</h4>
                     <% if request.params["r"] && request.params["l"] == "4" %>
-                        <img src="/images/2x4-short-red.png" alt="2x4 Short bricks" />
+                        <img src="/images/2x4-short-red.png" alt="2x4 Short bricks" id="location-4" />
                     <% else %>
-                        <img src="/images/2x4-short.png" alt="2x4 Short bricks" />
+                        <img src="/images/2x4-short.png" alt="2x4 Short bricks" id="location-4" />
                     <% end %>
-                    <a href="#nogo" class="button">View 2x4 Short</a>
+                    <a id="popular-category-link-1" href="#nogo" class="button">View 2x4 Short</a>
                 </div>
             </div>
-            <div class="col">
-                <div class="nav-block">
-                    <h4>1x4 Tall</h4>
+            <div id="popular-category-2" class="col">
+                <div id="popular-categories-block-2" class="nav-block">
+                    <h4 id="popular-category-heading-2">1x4 Tall</h4>
                     <% if request.params["r"] && request.params["l"] == "5" %>
                         <img id="location-5" src="/images/1x4-tall-flipped.png" alt="1x4 Tall bricks" />
                     <% else %>
                         <img id="location-5" src="/images/1x4-tall.png" alt="1x4 Tall bricks" />
                     <% end %>
-                    <a href="#nogo" class="button">View 1x4 Tall</a>
+                    <a id="popular-category-link-1"  href="#nogo" class="button">View 1x4 Tall</a>
                 </div>
             </div>  
-            <div class="col">
-                <div class="nav-block">
-                    <h4>2x4 Tall</h4>
-                    <img src="/images/2x4-tall.png" alt="2x4 Tall bricks" />
-                    <a href="#nogo" class="button">View 2x4 Tall</a>
+            <div id="popular-category-3" class="col">
+                <div id="popular-categories-block-3" class="nav-block">
+                    <h4 id="popular-category-heading-3">2x4 Tall</h4>
+                    <img id="popular-category-image-1" src="/images/2x4-tall.png" alt="2x4 Tall bricks" />
+                    <a id="popular-category-link-1"  href="#nogo" class="button">View 2x4 Tall</a>
                 </div>
             </div>      
         </div>

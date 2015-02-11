@@ -213,7 +213,7 @@ puts session[:conditions].inspect
 puts session[:conditions].size
 puts current_trial
 #puts ">>>>>>>>>>>>>>>>>>>>>>>>>>"
-  if current_trial > 30
+  if current_trial > TOTAL_TRIALS
     # Go to results
     redirect "/results"
   else 
@@ -259,7 +259,7 @@ get "/product" do
 end
 
 get "/results" do
-  if !session[:trials].empty? || @session.current_trial < 30
+  if @session.current_trial < TOTAL_TRIALS
     redirect "/trial"
   end
   

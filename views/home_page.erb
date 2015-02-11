@@ -1,7 +1,7 @@
 <div id="home">
     <div id="hero" class="clearfix">
-        <img src="/images/lego-pile.jpeg" alt="Lego pile" />
-        <p>
+        <img id="hero-image" src="/images/lego-pile.jpeg" alt="Lego pile" />
+        <p id="hero-text">
             Clearance sale on 2014 model individual bricks from all manufacturers. <br />
             Mix n' match colors and sizes. As always, free shipping!
             <br />
@@ -12,35 +12,35 @@
             <% end %>
         </p>
     </div>
-    <h2>Shop By</h2>
-    <div class="categories row">
-        <div class="col">
-            <div class="nav-block">
-                <h3>Color</h3>
-                <img src="/images/bricks-colored.jpeg" alt="Colored bricks" />
-                <a href="#nogo" class="button">View Colors</a>
+    <h2 id="heading-2">Shop By</h2>
+    <div id="home-categories" class="categories row">
+        <div id="home-category-1" class="col">
+            <div id="home-category-block-1" class="nav-block">
+                <h3 id="home-category-heading-1">Color</h3>
+                <img id="home-category-image-1" src="/images/bricks-colored.jpeg" alt="Colored bricks" />
+                <a id="home-category-link-1" href="#nogo" class="button">View Colors</a>
             </div>
         </div>
-        <div class="col">
-            <div class="nav-block" id="location-4">
-                <h3>Size</h3>
+        <div id="home-category-2" class="col">
+            <div class="nav-block">
+                <h3 id="home-category-heading-2">Size</h3>
                 <% if request.params["r"] && request.params["l"] == "4" %>
-                    <img src="/images/lego-bricks-various-sizes-white.png" alt="Various sized bricks" />
+                    <img src="/images/lego-bricks-various-sizes-white.png" alt="Various sized bricks" id="location-4" />
                 <% else %>
-                    <img src="/images/lego-bricks-various-sizes-red.png" alt="Various types of bricks" />
+                    <img src="/images/lego-bricks-various-sizes-red.png" alt="Various types of bricks" id="location-4" />
                 <% end %>
-                <a href="#nogo" class="button">View Sizes</a>
+                <a id="home-category-link-2" href="#nogo" class="button">View Sizes</a>
             </div>
         </div>
-        <div class="col">
-            <div class="nav-block">
-                <h3>Original Set</h3>
+        <div id="home-category-3" class="col">
+            <div id="home-category-block-2" class="nav-block">
+                <h3 id="home-category-heading-3">Original Set</h3>
                 <% if request.params["r"] && request.params["l"] == "5" %>
                     <img src="/images/lego-bricks-set-2.jpeg" alt="Lego bricks set" id="location-5" />
                 <% else %>
                     <img src="/images/lego-bricks-set.jpeg" alt="Lego bricks set" id="location-5" />
                 <% end %>
-                <a href="#nogo" class="button">View Sets</a>
+                <a id="home-category-link-3" href="#nogo" class="button">View Sets</a>
             </div>
         </div>
     </div>

@@ -9,7 +9,7 @@ var Trial = (function($){
     var minScreenWidth = 1040;
     var minScreenHeight = 940;
     var warningModal;
-    var allowClick = true;
+    var allowClick = false;
     var selectionTimeStart;
     var selectionTimeEnd;
     var selectionTimoutID;
@@ -140,6 +140,8 @@ console.log("Change condition 4, instant change");
     }
     
     function startSelectionTimer(){
+        allowClick = true;
+        
         selectionTimoutID = setTimeout(failedToMakeSelection, selectDelay);
     
 console.log("Selection timer set");

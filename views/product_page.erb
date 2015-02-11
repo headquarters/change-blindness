@@ -1,74 +1,74 @@
 <div id="product">
-    <h2>2x4 Short Brick</h2>
-    <div class="row">
+    <h2 id="heading-2">2x4 Short Brick</h2>
+    <div id="product-top-row" class="row">
         <div id="product-image">
-            <img src="/images/2x4-short-hero.png" alt="2x4 Short brick" />
+            <img id="product-hero" src="/images/2x4-short-hero.png" alt="2x4 Short brick" />
             <ul id="colors">
-                <li class="white">White</li>
-                <li class="red">Red</li>
-                <li class="blue">Blue</li>
-                <li class="green">Green</li>
-                <li class="active black">Black</li>
+                <li id="color-white" class="white">White</li>
+                <li id="color-red" class="red">Red</li>
+                <li id="color-blue" class="blue">Blue</li>
+                <li id="color-green" class="green">Green</li>
+                <li id="color-black" class="active black">Black</li>
             </ul>
         </div>
         <div id="product-info">
-            <div class="info">
-                <h3>2x4 Short Brick</h3>
-                <h4>Lego Brick 39479</h4>
-                <ul>
-                    <li>Fits standard Lego&reg; bricks and all Lego&reg;-compatible bricks</li>
-                    <li>Available in various colors</li>
-                    <li>Ships internationally</li>
+            <div id="product-description" class="info">
+                <h3 id="heading-3">2x4 Short Brick</h3>
+                <h4 id="heading-4">Lego Brick 39479</h4>
+                <ul id="product-info-list">
+                    <li id="product-info-list-item-1">Fits standard Lego&reg; bricks and all Lego&reg;-compatible bricks</li>
+                    <li id="product-info-list-item-2">Available in various colors</li>
+                    <li id="product-info-list-item-3">Ships internationally</li>
                 </ul>
             </div>
-            <div class="promo">Free shipping!</div>
-            <div class="price">
-                <span class="label">Price: </span> <span class="price-each">$0.39/each</span>
+            <div id="product-info-promo" class="promo">Free shipping!</div>
+            <div id="price" class="price">
+                <span id="price-label" class="label">Price: </span> <span id="price-each" class="price-each">$0.39/each</span>
             </div>
-            <div class="quantity">
-                <label for="quantity">Quantity:</label> <input id="quantity" type="text"><br />
-                <span class="label">(39 available)</span>
+            <div id="quantity-info" class="quantity">
+                <label id="quantity-label" for="quantity">Quantity:</label> <input id="quantity" type="text"><br />
+                <span id="available" class="label">(39 available)</span>
             </div>
-            <div class="add-to-cart">
+            <div id="add-cart-block" class="add-to-cart">
                 <% if request.params["r"] && request.params["l"] == "3" %>
                     <a id="location-3" href="#nogo" class="button">Put in Cart</a>
                 <% else %>
                     <a id="location-3" href="#nogo" class="button">Add to Cart</a>
                 <% end %>
                 <br />
-                <a href="#nogo" class="button secondary">Add to Wishlist</a>
+                <a id="add-to-wishlist" href="#nogo" class="button secondary">Add to Wish List</a>
             </div>
         </div>
     </div>
-    <h5>Customers Also Viewed</h5>
+    <h5 id="heading-5">Customers Also Viewed</h5>
     <div id="also-viewed" class="row">
-        <div class="col">
-            <div class="nav-block">
-                <h4>1x6 Short</h4>
+        <div id="product-also-viewed-1" class="col">
+            <div id="product-also-viewed-block-1" class="nav-block">
+                <h4 id="also-viwed-heading-1">1x6 Short</h4>
                 <% if request.params["r"] && request.params["l"] == "5" %>
                     <img id="location-5" src="/images/1x6-short-flipped.png" alt="1x6 Short bricks" />
                 <% else %>
                     <img id="location-5" src="/images/1x6-short.png" alt="1x6 Short bricks" />
                 <% end %>
-                <a href="#nogo" class="button">View 1x6 Short</a>
+                <a id="also-viewed-link-1" href="#nogo" class="button">View 1x6 Short</a>
             </div>
         </div>
-        <div class="col">
-            <div class="nav-block">
-                <h4>2x8 Tall</h4>
+        <div id="product-also-viewed-2" class="col">
+            <div id="product-also-viewed-block-2" class="nav-block">
+                <h4 id="also-viwed-heading-2">2x8 Tall</h4>
                 <% if request.params["r"] && request.params["l"] == "4" %>
                     <img id="location-4" src="/images/2x8-tall-gray.png" alt="2x8 Tall bricks" />
                 <% else %>
                     <img id="location-4" src="/images/2x8-tall-green.png" alt="2x8 Tall bricks" />
                 <% end %>
-                <a href="#nogo" class="button">View 2x8 Tall</a>                
+                <a id="also-viewed-link-2" href="#nogo" class="button">View 2x8 Tall</a>                
             </div>
         </div>
-        <div class="col">
-            <div class="nav-block">
-                <h4>2x8 Short</h4>
-                <img src="/images/2x8-short.png" alt="2x8 Short bricks" />
-                <a href="#nogo" class="button">View 2x8 Short</a>
+        <div id="product-also-viewed-3" class="col">
+            <div id="product-also-viewed-block-3" class="nav-block">
+                <h4 id="also-viwed-heading-3">2x8 Short</h4>
+                <img id="also-viewed-image-1" src="/images/2x8-short.png" alt="2x8 Short bricks" />
+                <a id="also-viewed-link-3" href="#nogo" class="button">View 2x8 Short</a>
             </div>
         </div>    
     </div>

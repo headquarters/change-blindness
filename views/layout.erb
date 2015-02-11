@@ -10,75 +10,75 @@
     <link rel="stylesheet" href="/css/jquery.magnific-popup.css">
     <link rel="stylesheet" href="/css/trials.css">
 	</head>
-	<body>
-		<header class="clearfix">
-          <div class="company-info">
+	<body id="body">
+		<header id="header" class="clearfix">
+          <div id="company-info" class="company-info">
             <% if request.params["r"] && request.params["l"] == "1" %>
               <img id="location-1" src="/images/logo-brick-2.png" alt="Brick Mart logo" />
             <% else %>
               <img id="location-1" src="/images/logo-brick.png" alt="Brick Mart logo" />
             <% end %>                        
-            <div class="name-and-tagline">
-              <h1>Brick Mart</h1>
-              <div class="subtitle">Individual bricks to complete your collection.</div>
+            <div id="name-and-tagline" class="name-and-tagline">
+              <h1 id="heading-1">Brick Mart</h1>
+              <div id="subtitle" class="subtitle">Individual bricks to complete your collection.</div>
             </div>
           </div>
-          <div class="nav-and-promo">
-            <div class="promo">Free shipping on all orders!</div>
-            <nav>
-              <ul>
-                  <li><a href="#nogo">Sign Up</a></li>
-                  <li><a href="#nogo">Account</a></li>
-                  <li><a href="#nogo">Cart</a></li>
-                  <li><a href="#nogo">Wishlist</a></li>
+          <div id="nav-and-promo" class="nav-and-promo">
+            <div id="promo" class="promo">Free shipping on all orders!</div>
+            <nav id="main-nav">
+              <ul id="main-nav-list">
+                  <li id="main-nav-item-1"><a id="main-nav-link-1" href="#nogo">Sign Up</a></li>
+                  <li id="main-nav-item-2"><a id="main-nav-link-2" href="#nogo">Account</a></li>
+                  <li id="main-nav-item-3"><a id="main-nav-link-3" href="#nogo">Cart</a></li>
+                  <li id="main-nav-item-4"><a id="main-nav-link-4" href="#nogo">Wish List</a></li>
               </ul>
             </nav>
           </div>
 		</header>
-        <div id="notification-area">&nbsp;</div>
-        <div id="search-and-breadcrumbs" class="clearfix">
-          <% if request.path == "/category" %>
-            <ul id="breadcrumbs">
-              <li><a href="#nogo">Home</a></li>
-              <li><a href="#nogo">Category</a></li>
-              <li>Bricks</li>
-            </ul>
-          <% end %>
-          <% if request.path == "/product" %>
-            <ul id="breadcrumbs">
-              <li><a href="#nogo">Home</a></li>
-              <li><a href="#nogo">Category</a></li>
-              <li><a href="#nogo">Bricks</a></li>
-              <li>2x4 Short</li>
-            </ul>
-          <% end %>
-          <% if request.path == "/home" %>
-            <ul id="home-nav">
-                <li><a href="#nogo">Category</a></li>
-                <li><a href="#nogo">Type</a></li>
-                <li><a href="#nogo">Manufacturer</a></li>
-                <li><a href="#nogo">Sales and Deals</a></li>
-            </ul>
-          <% end %>            
-          <div class="search">
-            <% if request.params["r"] && request.params["l"] == "2" %>
-              <input id="location-2" type="text" value="Brick size, type, set...">
-            <% else %>
-              <input id="location-2" type="text">
-            <% end %>
-            <button class="button secondary">Search</button>
-          </div>
-        </div>
-      
-        <div id="content" class="clearfix">
-          <section>
-              <%= yield %>
-          </section>
-        </div>
-		<footer>
-          <a href="#nogo">About</a> | <a href="#nogo">Returns and Refunds</a> | <a href="#nogo">Help</a> | <a href="#nogo">Contact Us</a> | <a href="#nogo">Careers</a>
+    <div id="search-and-breadcrumbs" class="clearfix">
+      <% if request.path == "/category" %>
+        <ul id="breadcrumbs">
+          <li id="breadcrumbs-item-1"><a id="breadcrumbs-link-1" href="#nogo">Home</a></li>
+          <li id="breadcrumbs-item-2"><a id="breadcrumbs-link-2" href="#nogo">Category</a></li>
+          <li id="breadcrumbs-item-3">Bricks</li>
+        </ul>
+      <% end %>
+      <% if request.path == "/product" %>
+        <ul id="breadcrumbs">
+          <li id="breadcrumbs-item-1"><a id="breadcrumbs-link-1" href="#nogo">Home</a></li>
+          <li id="breadcrumbs-item-2"><a id="breadcrumbs-link-2" href="#nogo">Category</a></li>
+          <li id="breadcrumbs-item-3"><a id="breadcrumbs-link-3" href="#nogo">Bricks</a></li>
+          <li id="breadcrumbs-item-4">2x4 Short</li>
+        </ul>
+      <% end %>
+      <% if request.path == "/home" %>
+        <ul id="home-nav">
+            <li id="home-nav-item-1"><a id="home-nav-link-1" href="#nogo">Category</a></li>
+            <li id="home-nav-item-2"><a id="home-nav-link-2" href="#nogo">Type</a></li>
+            <li id="home-nav-item-3"><a id="home-nav-link-3" href="#nogo">Manufacturer</a></li>
+            <li id="home-nav-item-4"><a id="home-nav-link-4" href="#nogo">Sales and Deals</a></li>
+        </ul>
+      <% end %>            
+      <div id="search" class="search">
+        <% if request.params["r"] && request.params["l"] == "2" %>
+          <input id="location-2" type="text" value="Brick size, type, set...">
+        <% else %>
+          <input id="location-2" type="text">
+        <% end %>
+        <button id="search-button" class="button secondary">Search</button>
+      </div>
+    </div>
+  
+    <div id="content" class="clearfix">
+      <%= yield %>
+    </div>
+		<footer id="footer">
+          <a id="footer-link-1" href="#nogo">About</a> | 
+          <a id="footer-link-2" href="#nogo">Returns and Refunds</a> | 
+          <a id="footer-link-3" href="#nogo">Help</a> | 
+          <a id="footer-link-4"  href="#nogo">Contact Us</a> | 
+          <a id="footer-link-5" href="#nogo">Careers</a>
           <div id="copyright">&copy; Brick Mart</div>
-		  
 		</footer>
     <script src="/js/jquery-1.11.2.min.js"></script>
     <script src="/js/jquery.magnific-popup.js"></script>

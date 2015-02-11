@@ -95,13 +95,10 @@ header nav ul li:last-child {
     font-size:0.9em;
 }
 
-#notification-area {
-    text-align:center;
-}
-
 #search-and-breadcrumbs {
     width:1000px;
     margin:0 auto;
+    padding-top:0.75em;
 }
 
 #breadcrumbs {
