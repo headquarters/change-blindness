@@ -45,6 +45,12 @@ input[disabled="disabled"] {
 #step4 {
     display:none;
 }
+/*
+#step1 p,
+#step2 ol,
+#step4 p {
+    font-size:1.2em;
+}*/
 
 .step p a {
     margin-top:1em;

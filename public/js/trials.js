@@ -21,6 +21,8 @@ var Trial = (function($){
         pageType = window.location.pathname;
         
         checkScreenSize();
+
+        checkBrowserVersion();
         
         $(window).on("resize", checkScreenSize);
 
@@ -34,7 +36,6 @@ var Trial = (function($){
         
         $(document).on("click", verifyClick);
         
-
         if (queryStringObject["r"] != undefined) {
             //second page load with the change, don't set 3 second timout
             runTrial();
@@ -172,18 +173,30 @@ var Trial = (function($){
         $(window).off("resize", checkScreenSize);
         $(document).off("click", verifyClick);
 
-        var modal = $('<div id="trial-complete" class="modal">\
-                    <strong>Trial Complete</strong>\
-                    <p>\
-                        Click "Next Trial" when you\'re ready. Remember that:\
-                        <ol>\
-                            <li>A page loads and is visible for 3 seconds.</li>\
-                            <li>Something on the page will change.</li>\
-                            <li>You have 5 seconds to pick the element that changed by clicking on it.</li>\
-                        </ol>\
-                    </p>\
-                    <a href="' + href + '" class="button">Next Trial</a>\
-                </div>');
+        if(currentTrial < 30){
+            var modal = $('<div id="trial-complete" class="modal">\
+                        <strong>Trial Complete</strong>\
+                        <p>\
+                            Click "Next Trial" when you\'re ready. Remember that:\
+                            <ol>\
+                                <li>You will be shown a web page.</li>\
+                                <li>After 3 seconds, one of the elements on the page will change.</li>\
+                                <li>You have 5 seconds to select the element that changed.</li>\
+                                <li>Select the element that changed by clicking on it.</li>\
+                                <li>If you do not select an element, the study will continue.</li>\
+                            </ol>\
+                        </p>\
+                        <a href="' + href + '" class="button">Next Trial</a>\
+                    </div>');
+        } else {
+            var modal = $('<div id="trial-complete" class="modal">\
+                        <strong>Trial Complete</strong>\
+                        <p>\
+                            That completes the trials for this test. Click "Go to Questionnaire" when you\'re ready. \
+                        </p>\
+                        <a href="' + href + '" class="button">Go to Questionnaire</a>\
+                    </div>');
+        }
 
         $.magnificPopup.open({
               items: {
@@ -266,6 +279,25 @@ var Trial = (function($){
         }
     }
     
+    function checkBrowserVersion(){
+        if($('html').is('.ie6, .ie7')){
+            $("#begin-test, .loader").remove();
+
+            var modal = $('<div id="browser-version-warning" class="modal"></div>')
+              .text('Sorry, but only Internet Explorer versions 8 and up are supported in this study. \
+                    Please upgrade your version of Internet Explorer or try a different browser.');
+
+            $.magnificPopup.open({
+              items: {
+                src: modal, 
+                type: 'inline'
+              },
+              modal: true,
+              preloader: false
+            });
+        };
+    }
+
     function getQueryStringAsObject(string) {
         var queryString = window.location.search;
         var queryStringAsObject = {};

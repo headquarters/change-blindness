@@ -28,9 +28,6 @@ function changeElement(){
     } else {
         $(".hero img").attr("src", "/images/vehicle-hero-flipped.png");
     }
-    
-    console.log(randomChange);
-    //timer = setTimeout(failedToSelectElement, pauseForSelection);
 }
 
 function failedToSelectElement(){
@@ -46,10 +43,10 @@ function selectElement(e) {
     
     if (randomChange === selectedItem) {
         $("#start-test").show();
-        result.text("Correct. You may continue practicing or start the test now.");
+        result.html("<strong>Correct.</strong> You may continue practicing or start the test now.");
     } else {
         $("#start-test").hide();
-        result.text("Incorrect. Please try again.")
+        result.html("<strong>Incorrect.</strong> Please try again.")
     }
     
     goToStep4();
