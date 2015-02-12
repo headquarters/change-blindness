@@ -46,6 +46,15 @@
     ExpiresByType application/xml                       "access plus 0 seconds"
     ExpiresByType text/xml                              "access plus 0 seconds"
 
+  # Media
+    ExpiresByType audio/ogg                             "access plus 1 hour"
+    ExpiresByType image/gif                             "access plus 1 hour"
+    ExpiresByType image/jpeg                            "access plus 1 hour"
+    ExpiresByType image/png                             "access plus 1 hour"
+    ExpiresByType video/mp4                             "access plus 1 hour"
+    ExpiresByType video/ogg                             "access plus 1 hour"
+    ExpiresByType video/webm                            "access plus 1 hour"    
+
   # HTML
     ExpiresByType text/html                             "access plus 0 seconds"
 

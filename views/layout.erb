@@ -6,7 +6,6 @@
         <title>Change Blindness Test</title>
 		<meta name="viewport" content="width=device-width">
 		<% if request.path == "/" %>
-			<script>var ip_address = "<%=request.ip%>";</script>
 			<script src="/js/boomerang/boomerang-0.9.1422480010.js"></script>
 		<% end %>
 		
@@ -52,13 +51,13 @@
 
 			BOOMR.init({
 				beacon_url: "/beacon",
-			    user_ip: <% if settings.production? %> ip_address <% else %> "192.168.192.168" <% end %>,
+			    user_ip: "<%= @@ip_address %>",
 				BW: {
 					base_url: "/images/boomerang/",
 					cookie: "bandwidth"
 				}
 			});		
-				
+
 			BOOMR.subscribe('before_beacon', function(o) {
 				if (typeof o != "undefined") {
 					$("#begin-test")
