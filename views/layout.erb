@@ -1,0 +1,87 @@
+<!doctype html>  
+<html lang="en">
+	<head>
+        <meta charset="utf-8" />
+        
+        <title>Change Blindness Test</title>
+		<meta name="viewport" content="width=device-width">
+		<% if request.path == "/" %>
+			<script>var ip_address = "<%=request.ip%>";</script>
+			<script src="/js/boomerang/boomerang-0.9.1422480010.js"></script>
+		<% end %>
+		
+		<link rel="stylesheet" href="/css/normalize.css">
+    	<link rel="stylesheet" href="/css/jquery.magnific-popup.css">
+		<link rel="stylesheet" href="/css/study.css">
+		<!--
+			Hi there. Please don't view the source or open the console while taking part in this
+			research experiment.
+		-->
+	</head>
+	<body id="practice">
+		<noscript>
+			<div id="notice">
+				Sorry, but JavaScript is required to take part in this experiment. 
+			</div>
+		</noscript>
+        <div id="content" class="clearfix">
+			<h1>Change Blindness Test</h1>
+			<section>
+				<%= yield %>
+			</section>
+        </div>
+		<script src="/js/jquery-1.11.2.min.js"></script>
+    	<script src="/js/jquery.magnific-popup.js"></script>
+		<script src="/js/study.js"></script>
+		<script src="/js/trials.js"></script>
+		<% if request.path == "/" %>		
+		<script>
+			var data = {
+			    screen_width: screen.width,
+			    screen_height: screen.height,
+			    browser_width: window.outerWidth,
+			    browser_height: window.outerHeight,
+			    pixel_depth: screen.pixelDepth,
+			    platform: navigator.platform,
+			    language: navigator.language,
+			    browser: navigator.vendor,
+			    user_agent: navigator.userAgent
+			};
+
+			BOOMR.addVar(data);
+
+			BOOMR.init({
+				beacon_url: "/beacon",
+			    user_ip: <% if settings.production? %> ip_address <% else %> "192.168.192.168" <% end %>,
+				BW: {
+					base_url: "/images/boomerang/",
+					cookie: "bandwidth"
+				}
+			});		
+				
+			BOOMR.subscribe('before_beacon', function(o) {
+				if (typeof o != "undefined") {
+					$("#begin-test")
+						.removeAttr("disabled")
+						.attr("value", "Begin the Test");
+					$(".loader").remove();
+				} else {
+					alert("An error has occurred loading part of the test. Please refresh the page to try again.");
+				}
+			});
+			
+			//cache images that will be used in the study
+			var images = [
+				//Practice images
+				"/images/vehicle-hero-flipped.png",
+				"/images/car-colored.png"
+			];
+			
+			for (var i = 0; i < images.length; i++) {
+				(new Image()).src = images[i];
+			}
+		</script>
+		<% end %>
+		
+	</body>
+</html>
