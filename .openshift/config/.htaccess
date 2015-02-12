@@ -52,3 +52,8 @@
   # JavaScript
     ExpiresByType application/javascript                "access plus 1 hour"
 </IfModule>
+
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+FileETag None
