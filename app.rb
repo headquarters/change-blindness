@@ -161,11 +161,11 @@ end
 # where one of the conditional changes happens. 
 get "/trial" do
   if session[:trials].nil?
-    session[:trials] = trials_pool.shuffle
+    session[:trials] = trials_pool
   end
 
   if session[:conditions].nil?
-    session[:conditions] = conditions_pool.shuffle
+    session[:conditions] = conditions_pool
   end
 
   if !params.empty?
@@ -200,10 +200,10 @@ get "/trial" do
     redirect "/results"
   else 
     trials = session[:trials]
-    random_trial = trials.shift
+    random_trial = trials.shuffle!.shift
   
     conditions = session[:conditions]
-    condition = conditions.shift
+    condition = conditions.shuffle!.shift
 
     if condition == "blank-screen"
       random_trial += "&c=1"
