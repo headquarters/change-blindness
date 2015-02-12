@@ -221,9 +221,6 @@ end
 ## Trial pages
 # Home page
 get "/home" do  
-  puts "***********************"
-  puts request.referrer
-  puts "***********************"
   @@page_title = "Trial #{@session.current_trial}"
 
   erb :home_page, :layout => :trials_layout
@@ -231,9 +228,6 @@ end
 
 # Category page
 get "/category" do
-  puts "***********************"
-  puts request.referrer
-  puts "***********************"
   @@page_title = "Trial #{@session.current_trial}"
 
   erb :category_page, :layout => :trials_layout
@@ -241,9 +235,6 @@ end
 
 # Product page
 get "/product" do
-  puts "***********************"
-  puts request.referrer
-  puts "***********************"
   @@page_title = "Trial #{@session.current_trial}"
 
   erb :product_page, :layout => :trials_layout
