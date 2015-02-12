@@ -39,7 +39,6 @@ var Trial = (function($){
             //second page load with the change, don't set 3 second timout
             runTrial();
         } else {
-console.log("Starting 3 second timer...");            
             setTimeout(runTrial, viewDelay);
         }
 
@@ -60,7 +59,6 @@ console.log("Starting 3 second timer...");
     
     function runTrial(){
         if (changeCondition == 1) {
-console.log("Change condition 1, 0.5 second blank screen");
             //blank screen for 0.5 second
             $(document.body).css("visibility", "hidden");
             
@@ -78,14 +76,12 @@ console.log("Change condition 1, 0.5 second blank screen");
             //normal HTTP request
 
             if (queryStringObject["r"] != undefined) {
-console.log("Page reloaded, awaiting selection");
                 //this is the request with the changed element,
                 //do not refresh, otherwise we'd be in a loop
                 selectionTimeStart = Date.now();
                 
                 startSelectionTimer();
-            } else {
-console.log("Change condition 2, reloading page");                
+            } else {             
                 //reload the page with the new HTML
                 //"r" param is used to prevent this from happening a second time
                 //include timestamp to prevent caching
@@ -93,7 +89,6 @@ console.log("Change condition 2, reloading page");
             }
         } else {
             //change element client with no visual disruption
-console.log("Change condition 4, instant change");
             changeElement();
             
             selectionTimeStart = Date.now();
@@ -101,8 +96,6 @@ console.log("Change condition 4, instant change");
         }
     }
 
-//TODO: may need to request these images to prevent extra "flicker" that might give away the change
-//Or at least set width and height on images to ensure they take up appropriate space while changing
     function changeElement(){
         if (changeLocation == 1) {
             //logo change
@@ -144,8 +137,6 @@ console.log("Change condition 4, instant change");
         allowClick = true;
         
         selectionTimoutID = setTimeout(failedToMakeSelection, selectDelay);
-    
-console.log("Selection timer set");
     }
     
     function failedToMakeSelection(){
@@ -181,8 +172,6 @@ console.log("Selection timer set");
         $(window).off("resize", checkScreenSize);
         $(document).off("click", verifyClick);
 
-
-
         var modal = $('<div id="trial-complete" class="modal">\
                     <strong>Trial Complete</strong>\
                     <p>\
@@ -205,7 +194,9 @@ console.log("Selection timer set");
               preloader: false
         });
         
-        $(document).on("click", "#trial-complete .button", function(){ console.log(this); $.magnificPopup.close(); });        
+        $(document).on("click", "#trial-complete .button", function(){ 
+            $.magnificPopup.close(); 
+        });        
     }
 
     function gatherData(event){

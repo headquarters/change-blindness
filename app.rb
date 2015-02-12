@@ -196,8 +196,8 @@ get "/trial" do
   current_trial = @session.current_trial
 
   if current_trial > TOTAL_TRIALS
-    # Go to results
-    redirect "/results"
+    # Go to questions
+    redirect "/questions"
   else 
     trials = session[:trials]
     random_trial = trials.shuffle!.shift
@@ -212,8 +212,6 @@ get "/trial" do
     else
       random_trial += "&c=3"
     end
-
-    random_trial += "&t=" + current_trial.to_s
     
     redirect random_trial.to_sym
   end
@@ -273,6 +271,8 @@ get "/results" do
   if @session.current_trial < TOTAL_TRIALS
     redirect "/trial"
   end
+
+  @correct_selection_count = Trial.count(:session_id => @session.id, :selection_status => "correct");
   
   if @session.mechanical_turk_code
     @mechanical_turk_code = @session.mechanical_turk_code
