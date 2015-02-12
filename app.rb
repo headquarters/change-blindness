@@ -133,7 +133,7 @@ get "/" do
   if settings.development?
     @@ip_address = "192.168.192.168"
   else
-    @@ip_address = env['HTTP_X_REAL_IP'] ? env['HTTP_X_REAL_IP'] : env['REMOTE_ADDR']
+    @@ip_address = env['HTTP_X_FORWARDED_FOR'] ? env['HTTP_X_FORWARDED_FOR'] : env['REMOTE_ADDR']
   end
   
   @@page_title = "Change Blindness Study"
@@ -285,7 +285,7 @@ end
 
 get "/beacon" do
   # TODO: Use http://ipinfo.io/ to get location from IP later
-  @session.ip_address = env['HTTP_X_REAL_IP'] ? env['HTTP_X_REAL_IP'] : env['REMOTE_ADDR']  
+  @session.ip_address = env['HTTP_X_FORWARDED_FOR'] ? env['HTTP_X_FORWARDED_FOR'] : env['REMOTE_ADDR']  
   @session.screen_width = params[:screen_width]
   @session.screen_height = params[:screen_height]
   @session.browser_width = params[:browser_width]

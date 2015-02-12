@@ -60,6 +60,7 @@
 
   # JavaScript
     ExpiresByType application/javascript                "access plus 1 hour"
+    ExpiresByType text/javascript                       "access plus 1 hour"
 </IfModule>
 
 <IfModule mod_headers.c>
