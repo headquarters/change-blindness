@@ -1,0 +1,44 @@
+<h2>Complete the Test</h2>
+<p>
+	You have completed all the trials in the test. Please complete the following questionnaire and submit your answers. 
+	You will receive your Mechanical Turk completion code on the following page.
+</p>
+<div id="questions">
+	<form method="post" action="/results">
+		<div class="question">
+			<label>What's your age range?</label><br />
+			<select name="age">
+				<option value="null" selected="selected"></option>
+				<option value="18-25">18-25</option>
+				<option value="25-34">25-34</option>
+				<option value="35-44">35-44</option>
+				<option value="45-54">45-54</option>
+				<option value="55-60">55-60</option>
+				<option value="60+">60+</option>
+			</select>
+		</div>
+		<div class="question">
+			<label>Which is your preferred desktop web browser?</label><br />
+			<select name="preferred_browser">
+				<option value="null" selected="selected"></option>
+				<option value="">Chrome</option>
+				<option value="">Firefox</option>
+				<option value="">Internet Explorer</option>
+				<option value="">Opera</option>
+				<option value="">Safari</option>
+				<option value="">Other</option>
+			</select>
+		</div>
+		<div class="question">
+			<label>How much time would you estimate you spend using a web browser each day?</label><br />
+			<select name="time_online">
+				<option value="null" selected="selected"></option>
+				<option value="1-2 hours">1-2 hours</option>
+				<option value="3-5 hours">3-5 hours</option>
+				<option value="6-8 hours">6-8 hours</option>
+				<option value="9+ hours">9+ hours</option>
+			</select>
+		</div>
+		<button type="submit">Submit Answers</button>
+	</form>
+</div>

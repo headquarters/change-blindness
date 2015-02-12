@@ -15,9 +15,15 @@ var Trial = (function($){
     var selectionTimoutID;
     var acceptablePageTypes = ["/home", "/category", "/product"];
     
+    self.pageLoadTime = 0;
+
     self.init = function(){
         pageType = window.location.pathname;
         
+        checkScreenSize();
+        
+        $(window).on("resize", checkScreenSize);
+
         //only run on the trial pages
         if (acceptablePageTypes.indexOf(pageType) === -1) {
             return;
@@ -26,12 +32,7 @@ var Trial = (function($){
         changeLocation = queryStringObject["l"];
         changeCondition = queryStringObject["c"];
         
-        //TODO: disable this until after the 3 seconds is up or on second page load, depending on condition
         $(document).on("click", verifyClick);
-        
-        checkScreenSize();
-        
-        $(window).on("resize", checkScreenSize);
         
 
         if (queryStringObject["r"] != undefined) {
@@ -246,8 +247,7 @@ console.log("Selection timer set");
             data["selected_location"] = -1;
         }
 
-        data["page_load_time"] = -1;
-        data["page_latency"] = -1;  
+        data["page_load_time"] = self.pageLoadTime;
         data["selection_time"] = (selectionTimeEnd - selectionTimeStart);
         
         return data;

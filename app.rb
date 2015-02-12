@@ -37,15 +37,12 @@ require "./models"
 DataMapper.auto_upgrade! 
 DataMapper.finalize
 
-Trial.raise_on_save_failure = true 
+# Trial.raise_on_save_failure = true 
 
 # Full <title> passed to a view by being global
 @@page_title = ""
 
 TOTAL_TRIALS = 30
-
-# Use round() when displaying.
-INCREMENT = 100.0/TOTAL_TRIALS
 
 conditions_pool = [
   # Condition 1: Blank screen for 0.5 second, change element while hidden, then show again
@@ -125,17 +122,16 @@ before do
   # Get the first session with this session_id or just create it and return that session row
   @session = Session.first_or_create(:session_id => session.id)
   
-  # If no consent given, return to home page
-  #if request.path != "/" && !@session.has_given_consent
+  # Ends up in a loop, so drop this requirement for now
+  # if request.path != "/" && !@session.has_given_consent
   #  redirect "/"
-  #end
+  # end
 end
 
-## Study pages
+## Practice pages
 get "/" do
   @@page_title = "Change Blindness Study"
-  #print @session.inspect
-  erb :home, :layout => :practice_layout
+  erb :home
 end
 
 post "/consent" do
@@ -147,14 +143,14 @@ end
 
 get "/practice" do
   @@page_title = "Practice"
-  erb :practice, :layout => :practice_layout  
+  erb :practice  
 end
 
 get "/start-test" do
   # Store the full array of trials here, for randomly picking during each /trial request
   session[:trials] = trials_pool
   session[:conditions] = conditions_pool
-  erb :start_test, :layout => :practice_layout
+  erb :start_test
 end
 
 # Condition 1: Blank screen for 0.5 second, change element while hidden, then show again
@@ -165,18 +161,15 @@ end
 # where one of the conditional changes happens. 
 get "/trial" do
   if session[:trials].nil?
-    session[:trials] = trials_pool
+    session[:trials] = trials_pool.shuffle
   end
 
   if session[:conditions].nil?
-    session[:conditions] = conditions_pool
+    session[:conditions] = conditions_pool.shuffle
   end
 
   if !params.empty?
     # Collect data from previous trial before redirecting to the next one
-#puts "*******************"
-#puts params.inspect
-#puts "*******************"
 
     trial = Trial.create(
       :session_id => @session.id,
@@ -193,35 +186,24 @@ get "/trial" do
       :selection_status => params[:selection_status],
       :clicked_x => params[:clicked_x],
       :clicked_y => params[:clicked_y],
-      :page_load_time => params[:page_load_time],
-      :page_latency => params[:page_latency]
+      :page_load_time => params[:page_load_time]
     )
-    
-#puts "#####################"
-#puts trial.saved?
-#puts "#####################"
+
     @session.current_trial = @session.current_trial + 1
     @session.save
   end
   
   current_trial = @session.current_trial
 
-puts ">>>>>>>>>>>>>>>>>>>>>>>>>>"
-puts session[:trials].inspect
-puts session[:trials].size
-puts session[:conditions].inspect
-puts session[:conditions].size
-puts current_trial
-#puts ">>>>>>>>>>>>>>>>>>>>>>>>>>"
   if current_trial > TOTAL_TRIALS
     # Go to results
     redirect "/results"
   else 
     trials = session[:trials]
-    random_trial = trials.shuffle!.shift
+    random_trial = trials.shift
   
     conditions = session[:conditions]
-    condition = conditions.shuffle!.shift
+    condition = conditions.shift
 
     if condition == "blank-screen"
       random_trial += "&c=1"
@@ -230,6 +212,8 @@ puts current_trial
     else
       random_trial += "&c=3"
     end
+
+    random_trial += "&t=" + current_trial.to_s
     
     redirect random_trial.to_sym
   end
@@ -239,23 +223,50 @@ end
 ## Trial pages
 # Home page
 get "/home" do  
+  puts "***********************"
+  puts request.referrer
+  puts "***********************"
   @@page_title = "Trial #{@session.current_trial}"
 
-  erb :home_page
+  erb :home_page, :layout => :trials_layout
 end
 
 # Category page
 get "/category" do
+  puts "***********************"
+  puts request.referrer
+  puts "***********************"
   @@page_title = "Trial #{@session.current_trial}"
 
-  erb :category_page 
+  erb :category_page, :layout => :trials_layout
 end
 
 # Product page
 get "/product" do
+  puts "***********************"
+  puts request.referrer
+  puts "***********************"
   @@page_title = "Trial #{@session.current_trial}"
 
-  erb :product_page
+  erb :product_page, :layout => :trials_layout
+end
+
+get "/questions" do
+
+  erb :questions
+end
+
+post "/results" do
+  # Save questions data
+  if !params.empty?
+    @session.age = params[:age]
+    @session.time_online = params[:time_online]
+    @session.preferred_browser = params[:preferred_browser]
+
+    @session.save
+  end
+
+  redirect "/results"
 end
 
 get "/results" do
@@ -272,7 +283,7 @@ get "/results" do
     @session.save
   end
   
-  erb :results, :layout => :practice_layout
+  erb :results
 end
 
 get "/beacon" do

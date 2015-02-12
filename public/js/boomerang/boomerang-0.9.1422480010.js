@@ -1507,7 +1507,7 @@ impl = {
 		}
 
 		this.complete = true;
-		//BOOMR.sendBeacon();
+		BOOMR.sendBeacon();
 		this.running = false;
 	},
 
@@ -2715,25 +2715,3 @@ BOOMR.t_end = new Date().getTime();
 
 /*jslint continue: true, plusplus: true, regexp: true, unparam: true, sloppy: true, white: true, browser: true, devel: true */
 /*properties BOOMR, BOOMR_lstart, BOOMR_start, BOOMR_configt*/
-
-var data = {
-    screen_width: screen.width,
-    screen_height: screen.height,
-    browser_width: window.outerWidth,
-    browser_height: window.outerHeight,
-    pixel_depth: screen.pixelDepth,
-    platform: navigator.platform,
-    language: navigator.language,
-    browser: navigator.vendor,
-    user_agent: navigator.userAgent
-};
-
-BOOMR.addVar(data);
-
-BOOMR.init({
-	beacon_url: "/beacon",
-    user_ip: ip_address,
-	BW: {
-		base_url: "/images/boomerang/"
-	}
-});

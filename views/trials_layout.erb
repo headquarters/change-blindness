@@ -5,6 +5,8 @@
         
         <title><%= @@page_title %></title>
 		<meta name="viewport" content="width=device-width">
+    <script>var ip_address = "<%=request.ip%>";</script>
+    <script src="/js/boomerang/boomerang-0.9.1422480010.js"></script>
 		
 		<link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/jquery.magnific-popup.css">
@@ -83,5 +85,13 @@
     <script src="/js/jquery-1.11.2.min.js"></script>
     <script src="/js/jquery.magnific-popup.js"></script>
     <script src="/js/trials.js"></script>
+    <script>
+      BOOMR.init();     
+      BOOMR.subscribe('before_beacon', function(o) {
+          if (typeof o != "undefined") {
+              Trial.pageLoadTime = o.t_done;
+          }
+      });
+    </script>
 	</body>
 </html>

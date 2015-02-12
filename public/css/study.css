@@ -26,10 +26,10 @@
 }
 
 .button,
-input[type="submit"] {
+[type="submit"] {
     display:inline-block;
     text-decoration: none;
-    padding:0.5em;
+    padding:0.5em 0.5em 0.4em;
     border:1px solid #ccc;
     border-radius:3px;
     background:#333;
@@ -132,4 +132,21 @@ input[disabled="disabled"] {
     font-size:1.4em;
     background:lightyellow;
     padding:0.5em;
+}
+
+.modal {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width: auto;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+#questions {
+    padding:1em 0;
+}
+
+#questions .question {
+    margin-bottom:1em;
 }
