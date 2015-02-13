@@ -280,11 +280,11 @@ var Trial = (function($){
     }
     
     function checkBrowserVersion(){
-        if($('html').is('.ie6, .ie7')){
+        if($('html').is('.ie6, .ie7, .ie8')){
             $("#begin-test, .loader").remove();
 
             var modal = $('<div id="browser-version-warning" class="modal"></div>')
-              .text('Sorry, but only Internet Explorer versions 8 and up are supported in this study. \
+              .text('Sorry, but only Internet Explorer versions 9 and up are supported in this study. \
                     Please upgrade your version of Internet Explorer or try a different browser.');
 
             $.magnificPopup.open({
