@@ -144,12 +144,22 @@ post "/consent" do
   @session.has_given_consent = true
   @session.save
   
-  redirect "/practice"
+  redirect "/practice/1"
 end
 
-get "/practice" do
+get "/practice/1" do
   @@page_title = "Practice"
-  erb :practice  
+  erb :practice1  
+end
+
+get "/practice/2" do
+  @@page_title = "Practice Instructions"
+  erb :practice2
+end
+
+get "/practice/3" do
+  @@page_title = "Practice Trial"
+  erb :practice3
 end
 
 get "/start-test" do
