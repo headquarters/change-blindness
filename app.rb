@@ -311,25 +311,38 @@ get "/beacon" do
 end
 
 get "/stats" do
-  @total_trials = Trial.count()
-  @total_correct_trials = Trial.count(:selection_status => "correct")
+  if params[:start_date].nil?
+    # before data was ever collected
+    start_date = "2015-02-01"
+  else
+    start_date = params[:start_date]
+  end
+  if params[:end_date].nil?
+    # far, far into the future, beyond the study
+    end_date = "2015-06-01"    
+  else 
+    end_date = params[:end_date]
+  end
+
+  @total_trials = Trial.count(:created_at => (start_date..end_date))
+  @total_correct_trials = Trial.count(:selection_status => "correct", :created_at => (start_date..end_date))
   @total_incorrect_trials = @total_trials - @total_correct_trials
 
   @percent_correct = @total_correct_trials.to_f / @total_trials.to_f * 100
   @percent_incorrect = 100 - @percent_correct
 
-  @total_trials_condition1 = Trial.count(:change_type => "1")
-  @total_correct_condition1 = Trial.count(:selection_status => "correct", :change_type => "1")
+  @total_trials_condition1 = Trial.count(:change_type => "1", :created_at => (start_date..end_date))
+  @total_correct_condition1 = Trial.count(:selection_status => "correct", :change_type => "1", :created_at => (start_date..end_date))
   @total_incorrect_condition1 = @total_trials_condition1 - @total_correct_condition1
   @percent_correct_condition1 = @total_correct_condition1.to_f / @total_trials_condition1.to_f * 100
 
-  @total_trials_condition2 = Trial.count(:change_type => "2")
-  @total_correct_condition2 = Trial.count(:selection_status => "correct", :change_type => "2")
+  @total_trials_condition2 = Trial.count(:change_type => "2", :created_at => (start_date..end_date))
+  @total_correct_condition2 = Trial.count(:selection_status => "correct", :change_type => "2", :created_at => (start_date..end_date))
   @total_incorrect_condition2 = @total_trials_condition2 - @total_correct_condition2
   @percent_correct_condition2 = @total_correct_condition2.to_f / @total_trials_condition2.to_f * 100
 
-  @total_trials_condition3 = Trial.count(:change_type => "3")
-  @total_correct_condition3 = Trial.count(:selection_status => "correct", :change_type => "3")
+  @total_trials_condition3 = Trial.count(:change_type => "3", :created_at => (start_date..end_date))
+  @total_correct_condition3 = Trial.count(:selection_status => "correct", :change_type => "3", :created_at => (start_date..end_date))
   @total_incorrect_condition3 = @total_trials_condition3 - @total_correct_condition3
   @percent_correct_condition3 = @total_correct_condition3.to_f / @total_trials_condition3.to_f * 100
 
