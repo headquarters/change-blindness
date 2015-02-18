@@ -1,0 +1,49 @@
+<h2>Study Data</h2>
+<div id="study-data">
+	<h3>All Trials</h3>
+	<div class="stat">
+		<strong>Total Trials:</strong> <%= @total_trials %>
+	</div>
+	<div class="stat">
+		<strong>Total Correct Trials:</strong> <%= @total_correct_trials %> (<%= @percent_correct.round(2) %>%)
+	</div>
+	<div class="stat">
+		<strong>Total Incorrect Trials:</strong> <%= @total_incorrect_trials %> (<%= @percent_incorrect.round(2) %>%)
+	</div>
+
+	<h3>Conditions</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Condition</th>
+				<th>Number of Trials</th>
+				<th>Number Correct</th>
+				<th>Number Incorrect</th>
+				<th>Percent Correct</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Condition 1</td>
+				<td><%= @total_trials_condition1 %></td>
+				<td><%= @total_correct_condition1 %></td>
+				<td><%= @total_incorrect_condition1 %></td>
+				<td><%= @percent_correct_condition1.round(2) %>%</td>
+			</tr>
+			<tr>
+				<td>Condition 2</td>
+				<td><%= @total_trials_condition2 %></td>
+				<td><%= @total_correct_condition2 %></td>
+				<td><%= @total_incorrect_condition2 %></td>
+				<td><%= @percent_correct_condition2.round(2) %>%</td>
+			</tr>
+			<tr>
+				<td>Condition 3</td>
+				<td><%= @total_trials_condition3 %></td>
+				<td><%= @total_correct_condition3 %></td>
+				<td><%= @total_incorrect_condition3 %></td>
+				<td><%= @percent_correct_condition3.round(2) %>%</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

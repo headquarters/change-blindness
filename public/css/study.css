@@ -148,3 +148,21 @@ input[disabled="disabled"] {
 #questions .question {
     margin-bottom:1em;
 }
+
+#study-data h3 {
+    margin-bottom:0;
+}
+
+#study-data .stat {
+    margin:0.5em 0;
+}
+
+#study-data table {
+    text-align:right;
+}
+
+#study-data table tr th,
+#study-data table tr td {
+    padding:0.5em;
+    border:1px solid #aaa;
+}
