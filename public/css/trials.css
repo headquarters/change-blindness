@@ -59,6 +59,10 @@ header .company-info .name-and-tagline {
     float:left;
 }
 
+header .company-info img {
+    margin-right:1em;
+}
+
 header .nav-and-promo {
     float:right;
     width:50%;
@@ -347,6 +351,10 @@ footer a {
 #product-info .promo,
 #product-info .add-to-cart {
     margin:1em 0;
+}
+
+#product-info .add-to-cart {
+    margin-bottom:0;
 }
 
 #product-info .quantity input {

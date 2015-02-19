@@ -6,8 +6,8 @@ var Trial = (function($){
     var queryStringObject = getQueryStringAsObject();
     var viewDelay = 3000;
     var selectDelay = 5000;
-    var minScreenWidth = 1040;
-    var minScreenHeight = 940;
+    var minScreenWidth = 1024;
+    var minScreenHeight = 900;
     var warningModal;
     var allowClick = false;
     var selectionTimeStart;
