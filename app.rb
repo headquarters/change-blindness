@@ -130,6 +130,10 @@ end
 
 ## Practice pages
 get "/" do
+  if !params[:mt].nil?
+    session[:is_mt_session] = true
+  end
+  
   if settings.development?
     @@ip_address = "192.168.192.168"
   else

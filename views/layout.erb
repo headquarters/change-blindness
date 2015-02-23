@@ -39,6 +39,23 @@
 		<script src="/js/trials.js"></script>
 		<% if request.path == "/" %>		
 		<script>
+			var browser;
+			var userAgent = navigator.userAgent;
+
+			if(userAgent.indexOf("Chrome") > -1) {
+			    browser = "Google Chrome";
+			} else if (userAgent.indexOf("Safari") > -1) {
+			    browser = "Apple Safari";
+			} else if (userAgent.indexOf("Opera") > -1) {
+			    browser = "Opera";
+			} else if (userAgent.indexOf("Firefox") > -1) {
+			    browser = "Mozilla Firefox";
+			} else if (userAgent.indexOf("MSIE") > -1) {
+			    browser = "Microsoft Internet Explorer";
+			} else {
+				browser = "Other"
+			}
+
 			var data = {
 			    screen_width: screen.width,
 			    screen_height: screen.height,
@@ -47,7 +64,7 @@
 			    pixel_depth: screen.pixelDepth,
 			    platform: navigator.platform,
 			    language: navigator.language,
-			    browser: navigator.vendor,
+			    browser: browser,
 			    user_agent: navigator.userAgent
 			};
 
