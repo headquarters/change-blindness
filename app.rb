@@ -284,6 +284,7 @@ get "/results" do
   end
 
   @correct_selection_count = Trial.count(:session_id => @session.id, :selection_status => "correct");
+  @average_selection_time = Trial.avg(:selection_time, :conditions => ["selection_status = ?", "correct"])
   
   if @session.mechanical_turk_code
     @mechanical_turk_code = @session.mechanical_turk_code
@@ -294,6 +295,10 @@ get "/results" do
     @session.save
   end
   
+  @share_url = "http://cbstudy.info"
+  @share_subject = "Take the change blindness test at cbstudy.info"
+  @share_body = "Take this test that explores change blindness on the web."
+
   erb :results
 end
 
@@ -366,4 +371,10 @@ helpers do
 
     return text
   end
+
+  def shorten_text_for_tweet(text, url)
+    # the 140th character is the newline break created between text and URL
+    remaining = 139 - url.length
+    return text.slice(0, remaining)
+  end  
 end

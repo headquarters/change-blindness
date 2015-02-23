@@ -166,3 +166,12 @@ input[disabled="disabled"] {
     padding:0.5em;
     border:1px solid #aaa;
 }
+
+.share-buttons a {
+    display:inline-block;
+    margin-right:10px;
+}
+
+.share-buttons a img {
+    max-width:44px;
+}

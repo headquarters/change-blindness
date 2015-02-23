@@ -1,7 +1,25 @@
 <h2>Test Complete</h2>
 <p>
-    Thank you for taking the time to participate in this test. <br />
-    You selected the correct element <%= @correct_selection_count %> out of 30 times. 
+    <strong>Thank you</strong> for taking the time to participate in this study!
+</p>
+<p>
+    You selected the correct element <%= @correct_selection_count %> out of 30 times. <br />
+    Your average time to select the correct element was <%= "%.2f" % (@average_selection_time.to_f / 1000) %> seconds.
+</p>
+<h3>Spread the Word</h3>
+<p>
+	Invite others to take part in this study: 
+	<div class="share-buttons">
+	    <a href="http://facebook.com/sharer/sharer.php?text=<%=@share_body%>&u=<%=@share_url%>">
+	        <img src="/images/facebook.png" alt="Facebook" />
+	    </a>
+	    <a href="http://twitter.com/share?text=<%=shorten_text_for_tweet(@share_body, @share_url)%>&url=<%=@share_url%>">
+	        <img src="/images/twitter.png" alt="Twitter" />
+	    </a>
+	    <a href="mailto:?subject=<%=@share_subject%>&body=<%=@share_body%> <%=@share_url%>">
+	        <img src="/images/email.png" alt="Email" />
+	    </a>
+	</div>	
 </p>
 <% if session[:is_mt_session] %>
 <p>
