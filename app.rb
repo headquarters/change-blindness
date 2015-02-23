@@ -7,7 +7,7 @@ require "securerandom"
 enable :sessions
 
 set :session_secret, ENV["CHANGE_BLINDNESS_SESSION_SECRET"]
-set :sessions, :expire_after => 2592000
+set :sessions, :expire_after => 86400 # session good for one day
 
 set :bind, "0.0.0.0"
 
