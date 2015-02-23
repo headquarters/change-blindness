@@ -42,7 +42,7 @@ DataMapper.finalize
 # Full <title> passed to a view by being global
 @@page_title = ""
 
-TOTAL_TRIALS = 30
+TOTAL_TRIALS = 5
 
 conditions_pool = [
   # Condition 1: Blank screen for 0.5 second, change element while hidden, then show again
