@@ -7,7 +7,7 @@ require "securerandom"
 enable :sessions
 
 set :session_secret, ENV["CHANGE_BLINDNESS_SESSION_SECRET"]
-set :sessions, :expire_after => 86400 # session good for one day
+set :sessions, :expire_after => 1209600 # session good for 14 days
 
 set :bind, "0.0.0.0"
 
@@ -42,7 +42,7 @@ DataMapper.finalize
 # Full <title> passed to a view by being global
 @@page_title = ""
 
-TOTAL_TRIALS = 5
+TOTAL_TRIALS = 30
 
 conditions_pool = [
   # Condition 1: Blank screen for 0.5 second, change element while hidden, then show again
