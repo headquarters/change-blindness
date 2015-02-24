@@ -259,8 +259,8 @@ var Trial = (function($){
     
     function checkScreenSize(args) {
         var modal = $('<div id="screen-size-warning" class="modal"></div>')
-              .text('The size of your screen is too small for this study. \
-                    Please adjust your screen size to at least ' + minScreenWidth + ' pixels wide by ' + minScreenHeight + ' pixels high to continue.');
+              .text('The size of your browser is too small for this study. \
+                    Please adjust your browser size to at least ' + minScreenWidth + ' pixels wide by ' + minScreenHeight + ' pixels high to continue.');
 
         if (window.outerWidth < minScreenWidth || window.outerHeight < minScreenHeight) {
             allowClick = false;
