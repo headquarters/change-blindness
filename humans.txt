@@ -1,3 +1,10 @@
 Icons originally from:
 http://thumbs.dreamstime.com/z/vehicle-icons-icon-set-pictograms-designed-around-theme-vehicles-35271480.jpg
 http://brickset.com
+
+Built on:
+Ruby https://www.ruby-lang.org/
+Sinatra http://sinatrarb.com
+Postgres http://postgresql.org
+Hosted on cloudapps.unc.edu
+Code available at https://github.com/headquarters/change-blindness

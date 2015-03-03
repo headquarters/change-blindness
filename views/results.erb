@@ -6,6 +6,7 @@
     You selected the correct element <%= @correct_selection_count %> out of 30 times. <br />
     Your average time to select the correct element was <%= "%.2f" % (@average_selection_time.to_f / 1000) %> seconds.
 </p>
+<% if !session[:is_mt_session] %>
 <h3>Spread the Word</h3>
 <p>
 	Invite others to take part in this study: 
@@ -21,6 +22,7 @@
 	    </a>
 	</div>	
 </p>
+<% end %>
 <% if session[:is_mt_session] %>
 <p>
     Please copy the following completion code into Mechanical Turk to get credit for completing the test:

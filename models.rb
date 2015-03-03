@@ -8,6 +8,7 @@ class Session
   property :created_at, DateTime
   property :has_given_consent, Boolean, :default => false
   property :mechanical_turk_code, String, :length => 128
+  property :is_mt_session, Boolean, :default => false
   property :age, String, :length => 128
   property :time_online, String, :length => 128
   property :preferred_browser, String, :length => 64

@@ -132,6 +132,8 @@ end
 get "/" do
   if !params[:mt].nil?
     session[:is_mt_session] = true
+    @session.is_mt_session = true
+    @session.save
   end
   
   if settings.development?
