@@ -42,42 +42,43 @@ DataMapper.finalize
 # Full <title> passed to a view by being global
 @@page_title = ""
 
-TOTAL_TRIALS = 30
+# TOTAL_TRIALS = 30
+TOTAL_TRIALS = 6
 
 conditions_pool = [
   # Condition 1: Blank screen for 0.5 second, change element while hidden, then show again
   "blank-screen",
   "blank-screen",  
-  "blank-screen",  
-  "blank-screen",  
-  "blank-screen",  
-  "blank-screen",  
-  "blank-screen",  
-  "blank-screen",  
-  "blank-screen",  
-  "blank-screen",  
+  # "blank-screen",  
+  # "blank-screen",  
+  # "blank-screen",  
+  # "blank-screen",  
+  # "blank-screen",  
+  # "blank-screen",  
+  # "blank-screen",  
+  # "blank-screen",  
   # Condition 2: Normal HTTP request; second page contains changed item
   "normal-http",
   "normal-http",
-  "normal-http",
-  "normal-http",
-  "normal-http",
-  "normal-http",
-  "normal-http",
-  "normal-http",
-  "normal-http",
-  "normal-http",  
+  # "normal-http",
+  # "normal-http",
+  # "normal-http",
+  # "normal-http",
+  # "normal-http",
+  # "normal-http",
+  # "normal-http",
+  # "normal-http",  
   # Condition 3: Change element on the client
   "no-http",
   "no-http",
-  "no-http",
-  "no-http",
-  "no-http",
-  "no-http",
-  "no-http",
-  "no-http",
-  "no-http",
-  "no-http",  
+  # "no-http",
+  # "no-http",
+  # "no-http",
+  # "no-http",
+  # "no-http",
+  # "no-http",
+  # "no-http",
+  # "no-http",  
 ]
 
 # URL structure:
